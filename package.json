@@ -1,0 +1,29 @@
+{
+  "name": "codeloftreact",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Arthurunique24/CodeloftReact.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Arthurunique24/CodeloftReact/issues"
+  },
+  "homepage": "https://github.com/Arthurunique24/CodeloftReact#readme",
+  "dependencies": {
+    "@types/react-dom": "^16.0.11",
+    "react": "^16.6.3",
+    "sass": "^1.15.1"
+  },
+  "devDependencies": {
+    "@types/react": "^16.7.13",
+    "webpack": "^4.27.1",
+    "webpack-cli": "^3.1.2"
+  }
+}
