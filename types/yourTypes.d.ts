@@ -1,0 +1,13 @@
+declare module 'yourTypes' {
+  export interface IInputData {
+    value: string;
+  }
+  
+  export interface ILoaderData {
+    isActive: boolean;
+  }
+  
+  export interface IUser {
+    name: string;
+  }
+}

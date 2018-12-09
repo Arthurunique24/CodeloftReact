@@ -1,0 +1,15 @@
+.button {
+  width: 150px;
+  height: 70px;
+  border: 1px solid #000000;
+
+  &__attr {
+    &-border {
+      border: 1px solid #000000;
+    }
+
+    &-color-black {
+      color: #000000;
+    }
+  }
+}
