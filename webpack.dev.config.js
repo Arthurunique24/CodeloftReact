@@ -20,7 +20,7 @@ module.exports = merge(common, {
     port: 3002,
     contentBase: common.context,
     disableHostCheck: true,
-    open: process.env.WEBPACK_SERVER_BROWSER || 'Yandex',
+    // open: process.env.WEBPACK_SERVER_BROWSER || 'Yandex',
     historyApiFallback: true,
     openPage: '/',
     
