@@ -4,11 +4,12 @@ import styled from 'styled-components';
 
 import Button from '../../components/Button/Button';
 import Input from '../../components/Input/Input';
+import Label from '../../components/Label/Label';
 import { ICommonReducer } from '../../redux/common/common.reducer';
 import { setUserName } from '../../redux/common/common.action';
 
 /* tslint:disable:variable-name */
-const MainWrapper = styled.div`
+const SignInWrapper = styled.div`
   // some styles
 `;
 /* tslint:enable:variable-name */
@@ -23,28 +24,28 @@ interface IState {
 
 }
 
-class Main extends React.Component<IProps, IState> {
+class SignIn extends React.Component<IProps, IState> {
   public constructor(props) {
     super(props);
-    
+
     // this.customOnClick = this.customOnClick.bind(this);
   }
-  
+
   public render(): JSX.Element {
     return (
-      <MainWrapper>
-        {/*<span>{ this.props.username || 'Пусто' }</span>*/}
-        {/*<Input placeholder={''}/>*/}
-        <Button text={ 'Single Player' } /*onClick={ this.customOnClick }*/ />
-        <Button text={ 'Multi Player' }/>
-        <Button text={ 'Rules' } />
-        <Button text={ 'High Score' } />
-        <Button text={ 'Profile' } />
-        <Button text={ 'Chat' } />
-      </MainWrapper>
+        <SignInWrapper>
+          <form className={'sinIn-block__signIn-form'}>
+            <Label text={'Login Error'}/>
+            <Input placeholder={'Login'}/>
+            <Label text={'Password Error'}/>
+            <Input placeholder={'Password'}/>
+            <Button text={ 'Sign In' }/>
+          </form>
+          <Button text={ 'Back' }/>
+        </SignInWrapper>
     );
   }
-  
+
   // private customOnClick(event) {
   //   const {text, setUserName} = this.props;
   //   setUserName(text);
@@ -66,4 +67,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Main);
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
