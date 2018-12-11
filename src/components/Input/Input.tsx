@@ -15,6 +15,7 @@ const InputWrapper = styled.div`
 
 interface IProps {
   text?: string;
+  className?: string;
   placeholder?: string;
   setInputData?: (value: string) => void;
 }
@@ -26,17 +27,17 @@ interface IState {
 class Input extends React.Component<IProps, IState> {
   public constructor(props: IProps) {
     super(props);
-    
     // this.onChange = this.onChange.bind(this);
   }
   
   public render(): JSX.Element {
-    const {text} = this.props;
-    const {placeholder} = this.props;
+    const { text } = this.props;
+    const { className } = this.props;
+    const { placeholder } = this.props;
     
     return (
       <InputWrapper>
-        <input className={'input'} value={ text } placeholder={ placeholder } /*onChange={ this.onChange } *//>
+        <input className={ className } value={ text } placeholder={ placeholder } /*onChange={ this.onChange } *//>
       </InputWrapper>
     );
   }

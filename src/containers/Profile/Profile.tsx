@@ -4,9 +4,11 @@ import styled from 'styled-components';
 
 import Button from '../../components/Button/Button';
 import Label from '../../components/Label/Label';
-import Image from '../../components/Img/Img'
+import Image from '../../components/Img/Img';
+import UserInfo from '../../components/UserInfo/UserInfo';
 import { ICommonReducer } from '../../redux/common/common.reducer';
 import { setUserName } from '../../redux/common/common.action';
+import '../../statics/scss/user-page.scss'
 
 /* tslint:disable:variable-name */
 const ProfileWrapper = styled.div`
@@ -17,7 +19,7 @@ const ProfileWrapper = styled.div`
 interface IProps {
   username?: string;
   email?: string;
-  score?: string
+  score?: string;
 }
 
 interface IState {
@@ -34,9 +36,10 @@ class Profile extends React.Component<IProps, IState> {
   public render(): JSX.Element {
     return (
         <ProfileWrapper>
-          <Image imgSrc={'../statics/imgs/user-default.jpg'} imgClass={''}/>
-          <Button text={ 'Back' }/>
-          <Button text={ 'LogOut' }/>
+          <Image imgSrc={ '../statics/imgs/user-default.jpg' } className={ 'profile-block__avatar' }/>
+          <UserInfo className={ 'profile-block__user-info' } user={ 'Asd' } email={ 'asd@asd.com' } score={ '100' }/>
+          <Button className={ 'button' } text={ 'Back' }/>
+          <Button className={ 'button' } text={ 'LogOut' }/>
         </ProfileWrapper>
     );
   }

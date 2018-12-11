@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import Button from '../../components/Button/Button';
 import { ICommonReducer } from '../../redux/common/common.reducer';
-import Label from "../../components/Label/Label";
+import Label from '../../components/Label/Label';
 
 /* tslint:disable:variable-name */
 const MainWrapper = styled.div`
@@ -30,13 +30,13 @@ class About extends React.Component<IProps, IState> {
   public render(): JSX.Element {
     return (
         <MainWrapper>
-          <Label text={'In our game you will play for a motorcyclist, ' +
+          <Label className={ 'error-label' } text={ 'In our game you will play for a motorcyclist, ' +
           'which leaves a bright trace. Other players or bots will also draw ' +
           'a line for themselves, and your task is to avoid contact with this line, ' +
           'regardless of whether it\'s yours or not. Also, in order to win, you must draw a ' +
           'line so that opponents can not avoid your trace. On the playing field will be spawned ' +
-          'various bonuses that will help you win. So do not yawn!'}/>
-          <Button text={ 'Back' } />
+          'various bonuses that will help you win. So do not yawn!' }/>
+          <Button className={ 'button' } text={ 'Back' } />
         </MainWrapper>
     );
   }

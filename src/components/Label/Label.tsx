@@ -1,10 +1,11 @@
 import * as React from 'react';
 import b from '../../middleware/b';
-import styled from "styled-components";
-import './Lable.scss'
+import styled from 'styled-components';
+import './Label.scss';
 
 interface IProps {
-  text: string;
+  text?: string;
+  className?: string;
 }
 
 interface IState {
@@ -20,10 +21,11 @@ export default class Label extends React.Component<IProps, IState> {
   }
 
   public render(): JSX.Element {
-    const {text} = this.props;
+    const { text } = this.props;
+    const { className } = this.props;
 
     return (
-        <p className={'error-label'}>{text}</p>
+        <p className={ className }>{ text }</p>
     );
   }
 }
