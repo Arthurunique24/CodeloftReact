@@ -3,9 +3,8 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 import Button from '../../components/Button/Button';
-import Input from '../../components/Input/Input';
 import { ICommonReducer } from '../../redux/common/common.reducer';
-import { setUserName } from '../../redux/common/common.action';
+import Label from "../../components/Label/Label";
 
 /* tslint:disable:variable-name */
 const MainWrapper = styled.div`
@@ -15,36 +14,33 @@ const MainWrapper = styled.div`
 
 interface IProps {
   text?: string;
-  // username?: string;
-  // setUserName?: (value: string) => void;
 }
 
 interface IState {
 
 }
 
-class Main extends React.Component<IProps, IState> {
+class About extends React.Component<IProps, IState> {
   public constructor(props) {
     super(props);
-    
+
     // this.customOnClick = this.customOnClick.bind(this);
   }
-  
+
   public render(): JSX.Element {
     return (
-      <MainWrapper>
-        {/*<span>{ this.props.username || 'Пусто' }</span>*/}
-        {/*<Input placeholder={''}/>*/}
-        <Button text={ 'Single Player' } /*onClick={ this.customOnClick }*/ />
-        <Button text={ 'Multi Player' }/>
-        <Button text={ 'Rules' } />
-        <Button text={ 'High Score' } />
-        <Button text={ 'Profile' } />
-        <Button text={ 'Chat' } />
-      </MainWrapper>
+        <MainWrapper>
+          <Label text={'In our game you will play for a motorcyclist, ' +
+          'which leaves a bright trace. Other players or bots will also draw ' +
+          'a line for themselves, and your task is to avoid contact with this line, ' +
+          'regardless of whether it\'s yours or not. Also, in order to win, you must draw a ' +
+          'line so that opponents can not avoid your trace. On the playing field will be spawned ' +
+          'various bonuses that will help you win. So do not yawn!'}/>
+          <Button text={ 'Back' } />
+        </MainWrapper>
     );
   }
-  
+
   // private customOnClick(event) {
   //   const {text, setUserName} = this.props;
   //   setUserName(text);
@@ -66,4 +62,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Main);
+export default connect(mapStateToProps, mapDispatchToProps)(About);

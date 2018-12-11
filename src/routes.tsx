@@ -4,6 +4,8 @@ import { Route, Switch } from 'react-router';
 import Main from './containers/Main/Main';
 import SignIn from './containers/SignIn/SignIn';
 import SignUp from './containers/SignUp/SignUp';
+import About from './containers/About/About';
+import Profile from './containers/Profile/Profile';
 import NotFound from './containers/NotFound/NotFound';
 
 export const PATHS = {
@@ -25,6 +27,8 @@ export const routes: JSX.Element = (
     <Route exact={ true } path={ PATHS.MENU } component={ Main } />
     <Route exact={ true } path={ PATHS.SIGN_IN } component={ SignIn } />
     <Route exact={ true } path={ PATHS.SIGN_UP } component={ SignUp } />
+    <Route exact={ true } path={ PATHS.PROFILE } component={ Profile } />
+    <Route exact={ true } path={ PATHS.ABOUT } component={ About } />
     <Route exact={ true } path={ PATHS.ERROR } component={ NotFound } />
     <Route render={ () => <span>Тоже не найдено</span> } />
   </Switch>
