@@ -2,7 +2,7 @@ import * as fetch from 'isomorphic-fetch';
 
 class Transport {
   private static instance: Transport;
-  private headers: object;
+  private headers: Headers;
   private baseUrl: string;
 
   constructor() {
@@ -10,7 +10,6 @@ class Transport {
       return Transport.instance;
     }
 
-    this.headers = {};
     this.baseUrl = '';
 
     Transport.instance = this;
@@ -38,15 +37,15 @@ class Transport {
   }
 
   private setRequest(options?) {
-    return {
+    const params: RequestInit = {
       method: options.method,
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
       },
       body: options.body,
       credentials: 'same-origin',
-      timeout: options.timeout,
     };
+    return params;
   }
 
   private setUpHeaders() {
