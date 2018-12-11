@@ -5,7 +5,6 @@ import './Lable.scss'
 
 interface IProps {
   text: string;
-  onClick?: (event) => void;
 }
 
 interface IState {
