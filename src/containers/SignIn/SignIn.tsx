@@ -6,7 +6,7 @@ import Button from '../../components/Button/Button';
 import Input from '../../components/Input/Input';
 import Label from '../../components/Label/Label';
 import { ICommonReducer } from '../../redux/common/common.reducer';
-import {Form} from 'react-final-form';
+import { Form, Field } from 'react-final-form';
 import { setUserName } from '../../redux/common/common.action';
 
 /* tslint:disable:variable-name */
@@ -35,14 +35,10 @@ class SignIn extends React.Component<IProps, IState> {
 
     public render(): JSX.Element {
         return (
-            <SignInWrapper>
-                <Form
-                    onSubmit={this.onSubmit}
-                    render={() => <Input/>}
-                >
-                </Form>
-                <Button text={'Back'}/>
-            </SignInWrapper>
+            <Form
+                onSubmit={this.onSubmit}
+                render={() => (<Input/>)}
+            />
         );
     }
 
