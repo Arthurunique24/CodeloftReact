@@ -47,15 +47,11 @@ class About extends React.Component<IProps, IState> {
       this.props.aboutAction('example1');
   }
 
-  // private customOnClick(event) {
-  //   const {text, setUserName} = this.props;
-  //   setUserName(text);
-  // }
 }
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: { common: ICommonReducer; }) => {
   return {
-      text: state.text,
+      text: state.common.text.text,
   };
 };
 

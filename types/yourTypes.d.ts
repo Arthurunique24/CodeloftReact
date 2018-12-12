@@ -10,4 +10,8 @@ declare module 'yourTypes' {
   export interface IUser {
     name: string;
   }
+
+  export interface IAbout {
+      text: string;
+  }
 }
