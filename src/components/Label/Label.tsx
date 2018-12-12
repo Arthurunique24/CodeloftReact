@@ -1,7 +1,7 @@
 import * as React from 'react';
 import b from '../../middleware/b';
 import styled from "styled-components";
-import './Lable.scss'
+import './Lable.scss';
 
 interface IProps {
   text: string;

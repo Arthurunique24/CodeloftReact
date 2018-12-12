@@ -1,10 +1,12 @@
 import { SET_INPUT_DATA, SET_LOADING, SET_USER } from './common.constants';
 import { IInputData, ILoaderData, IUser } from 'yourTypes';
+import * as types from '../../store/types';
 
 export interface ICommonReducer {
   inputData: IInputData;
   loaderData: ILoaderData;
   userData: IUser;
+  text: string;
 }
 
 enum CommonActionTypes {
@@ -14,25 +16,26 @@ enum CommonActionTypes {
 }
 
 interface ICommonAction {
-  type: CommonActionTypes;
+  type: any;
   inputData?: IInputData;
   loaderData?: ILoaderData;
   userData?: IUser;
 }
 
 const initialState: ICommonReducer = {
-  inputData: {
-    value: '',
-  },
-  loaderData: {
-    isActive: false,
-  },
-  userData: {
-    name: '',
-  },
+    inputData: {
+        value: '',
+    },
+    loaderData: {
+        isActive: false,
+    },
+    userData: {
+        name: '',
+    },
+    text: 'a',
 };
 
-export function common(state: ICommonReducer = initialState, action: ICommonAction) {
+export function common(state: ICommonReducer = initialState, action: any) {
   switch (action.type) {
     case SET_INPUT_DATA:
       return {
@@ -49,7 +52,12 @@ export function common(state: ICommonReducer = initialState, action: ICommonActi
         ...state,
         userData: {...action.userData},
       };
-    default:
+      case types.RULES_RELOAD:
+          return {
+              ...state,
+              text: { ...action.text },
+          };
+      default:
       return state;
   }
 }

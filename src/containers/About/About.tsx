@@ -4,7 +4,10 @@ import styled from 'styled-components';
 
 import Button from '../../components/Button/Button';
 import { ICommonReducer } from '../../redux/common/common.reducer';
-import Label from "../../components/Label/Label";
+import Label from '../../components/Label/Label';
+import * as aboutAction from '../../store/actions';
+import { bindActionCreators } from 'redux';
+import { setAboutText } from '../../store/actions';
 
 /* tslint:disable:variable-name */
 const MainWrapper = styled.div`
@@ -14,6 +17,7 @@ const MainWrapper = styled.div`
 
 interface IProps {
   text?: string;
+  aboutAction?: any;
 }
 
 interface IState {
@@ -23,22 +27,24 @@ interface IState {
 class About extends React.Component<IProps, IState> {
   public constructor(props) {
     super(props);
-
+    this.changeText = this.changeText.bind(this);
     // this.customOnClick = this.customOnClick.bind(this);
   }
 
   public render(): JSX.Element {
+      const { text } = this.props;
     return (
         <MainWrapper>
-          <Label text={'In our game you will play for a motorcyclist, ' +
-          'which leaves a bright trace. Other players or bots will also draw ' +
-          'a line for themselves, and your task is to avoid contact with this line, ' +
-          'regardless of whether it\'s yours or not. Also, in order to win, you must draw a ' +
-          'line so that opponents can not avoid your trace. On the playing field will be spawned ' +
-          'various bonuses that will help you win. So do not yawn!'}/>
-          <Button text={ 'Back' } />
+          <Label
+              text={ text }
+          />
+          <Button text={ 'Back' } onClick={this.changeText} />
         </MainWrapper>
     );
+  }
+
+  public changeText(event): void {
+      this.props.aboutAction('example1');
   }
 
   // private customOnClick(event) {
@@ -47,18 +53,17 @@ class About extends React.Component<IProps, IState> {
   // }
 }
 
-const mapStateToProps = (state: { common: ICommonReducer; }) => {
+const mapStateToProps = (state: any) => {
   return {
-    // username: state.common.userData.name,
-    // text: state.common.inputData.value,
+      text: state.text,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    // setUserName(value: string) {
-    //   dispatch(setUserName(value));
-    // },
+      aboutAction(text: string) {
+          dispatch(setAboutText(text));
+      },
   };
 };
 

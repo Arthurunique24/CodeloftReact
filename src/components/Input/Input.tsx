@@ -27,7 +27,7 @@ class Input extends React.Component<IProps, IState> {
   public constructor(props: IProps) {
     super(props);
     
-    // this.onChange = this.onChange.bind(this);
+    this.onChange = this.onChange.bind(this);
   }
   
   public render(): JSX.Element {
@@ -36,14 +36,14 @@ class Input extends React.Component<IProps, IState> {
     
     return (
       <InputWrapper>
-        <input className={'input'} value={ text } placeholder={ placeholder } /*onChange={ this.onChange } *//>
+        <input className={ 'input' } value={ text } placeholder={ placeholder } onChange={ this.onChange } />
       </InputWrapper>
     );
   }
   
-  // private onChange(event) {
-  //   this.props.setInputData(event.target.value);
-  // }
+  private onChange(event) {
+    this.props.setInputData(event.target.value);
+  }
 }
 
 const mapStateToProps = (state: { common: ICommonReducer; }) => {
@@ -52,7 +52,7 @@ const mapStateToProps = (state: { common: ICommonReducer; }) => {
   };
 };
 
-const mapDispatchToProps =dispatch => {
+const mapDispatchToProps = dispatch => {
   return {
     setInputData(value: string) {
       dispatch(setInputData(value));

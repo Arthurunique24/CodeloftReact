@@ -27,7 +27,7 @@
     "no-unused-variable": true,
     "no-unused-expression": true,
     "no-empty-interface": false,
-    "no-any": true,
+    "no-any": false,
     "use-isnan": true,
     "array-type": [true, "array"],
     "arrow-return-shorthand": true,
