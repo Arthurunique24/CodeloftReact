@@ -34,15 +34,15 @@ class SignUp extends React.Component<IProps, IState> {
   public render(): JSX.Element {
     return (
         <SignInWrapper>
-          <form className={'sinIn-block__signIn-form'}>
-            <Label text={'Login Error'}/>
-            <Input placeholder={'Login'}/>
-            <Label text={'Email Error'}/>
-            <Input placeholder={'Email'}/>
-            <Label text={'Password Error'}/>
-            <Input placeholder={'Password'}/>
-            <Label text={'Password Confirm Error'}/>
-            <Input placeholder={'Password repeat'}/>
+          <form className={ 'sinIn-block__signIn-form' }>
+            <Label text={ 'Login Error' }/>
+            <Input placeholder={ 'Login' }/>
+            <Label text={ 'Email Error' }/>
+            <Input placeholder={ 'Email' }/>
+            <Label text={ 'Password Error' }/>
+            <Input placeholder={ 'Password' }/>
+            <Label text={ 'Password Confirm Error' }/>
+            <Input placeholder={ 'Password repeat' }/>
             <Button text={ 'Sign In' }/>
           </form>
           <Button text={ 'Back' }/>

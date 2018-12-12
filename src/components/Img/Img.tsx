@@ -1,6 +1,6 @@
 import * as React from 'react';
 import b from '../../middleware/b';
-import styled from "styled-components";
+import styled from 'styled-components';
 import '../Label/Lable.scss';
 
 interface IProps {
@@ -24,7 +24,7 @@ export default class Label extends React.Component<IProps, IState> {
     const {imgClass} = this.props;
 
     return (
-        <img className={imgClass} src={imgSrc}/>
+        <img className={ imgClass } src={ imgSrc }/>
     );
   }
 }

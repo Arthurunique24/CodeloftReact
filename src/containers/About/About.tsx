@@ -33,12 +33,12 @@ class About extends React.Component<IProps, IState> {
 
   public render(): JSX.Element {
       const { text } = this.props;
-    return (
+      return (
         <MainWrapper>
           <Label
               text={ text }
           />
-          <Button text={ 'Back' } onClick={this.changeText} />
+          <Button text={ 'Back' } onClick={ this.changeText } />
         </MainWrapper>
     );
   }

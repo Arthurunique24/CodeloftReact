@@ -33,8 +33,8 @@ class Main extends React.Component<IProps, IState> {
   public render(): JSX.Element {
     return (
       <MainWrapper>
-        {/*<span>{ this.props.username || 'Пусто' }</span>*/}
-        {/*<Input placeholder={''}/>*/}
+        { /*<span>{ this.props.username || 'Пусто' }</span>*/ }
+        { /*<Input placeholder={''}/>*/ }
         <Button text={ 'Single Player' } /*onClick={ this.customOnClick }*/ />
         <Button text={ 'Multi Player' }/>
         <Button text={ 'Rules' } />

@@ -6,18 +6,20 @@ import Button from '../../components/Button/Button';
 import Input from '../../components/Input/Input';
 import Label from '../../components/Label/Label';
 import { ICommonReducer } from '../../redux/common/common.reducer';
+import {Form} from 'react-final-form';
 import { setUserName } from '../../redux/common/common.action';
 
 /* tslint:disable:variable-name */
 const SignInWrapper = styled.div`
   // some styles
 `;
+
 /* tslint:enable:variable-name */
 
 interface IProps {
-  // text?: string;
-  // username?: string;
-  // setUserName?: (value: string) => void;
+    // text?: string;
+    // username?: string;
+    // setUserName?: (value: string) => void;
 }
 
 interface IState {
@@ -25,46 +27,48 @@ interface IState {
 }
 
 class SignIn extends React.Component<IProps, IState> {
-  public constructor(props) {
-    super(props);
+    public constructor(props) {
+        super(props);
+        this.validate = this.validate.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
+    }
 
-    // this.customOnClick = this.customOnClick.bind(this);
-  }
+    public render(): JSX.Element {
+        return (
+            <SignInWrapper>
+                <Form
+                    onSubmit={this.onSubmit}
+                    render={() => <Input/>}
+                >
+                </Form>
+                <Button text={'Back'}/>
+            </SignInWrapper>
+        );
+    }
 
-  public render(): JSX.Element {
-    return (
-        <SignInWrapper>
-          <form className={'sinIn-block__signIn-form'}>
-            <Label text={'Login Error'}/>
-            <Input placeholder={'Login'}/>
-            <Label text={'Password Error'}/>
-            <Input placeholder={'Password'}/>
-            <Button text={ 'Sign In' }/>
-          </form>
-          <Button text={ 'Back' }/>
-        </SignInWrapper>
-    );
-  }
+    private validate(value) {
+        console.log(value);
+        return [];
+    }
 
-  // private customOnClick(event) {
-  //   const {text, setUserName} = this.props;
-  //   setUserName(text);
-  // }
+    private onSubmit(data) {
+        alert(JSON.stringify(data));
+    }
 }
 
 const mapStateToProps = (state: { common: ICommonReducer; }) => {
-  return {
-    // username: state.common.userData.name,
-    // text: state.common.inputData.value,
-  };
+    return {
+        // username: state.common.userData.name,
+        // text: state.common.inputData.value,
+    };
 };
 
 const mapDispatchToProps = dispatch => {
-  return {
-    // setUserName(value: string) {
-    //   dispatch(setUserName(value));
-    // },
-  };
+    return {
+        // setUserName(value: string) {
+        //   dispatch(setUserName(value));
+        // },
+    };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

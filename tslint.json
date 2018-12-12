@@ -3,7 +3,7 @@
   "extends": ["tslint:recommended", "tslint-react"],
   "jsRules": {},
   "rules": {
-    "no-var-requires": true,
+    "no-var-requires": false,
     "quotemark": [true, "single", "avoid-escape"],
     "trailing-comma": [true, {"multiline": "always", "singleline": "never"}],
     "ordered-imports": [true, {"import-sources-order": "any", "named-imports-order": "any"}],
@@ -42,12 +42,12 @@
     "arrow-parens": [true, "ban-single-arg-parens"],
 
     "jsx-self-close": true,
-    "jsx-space-before-trailing-slash": true,
+    "jsx-space-before-trailing-slash": false,
     "jsx-wrap-multiline": true,
     "jsx-no-multiline-js": false,
-    "jsx-no-lambda": true,
+    "jsx-no-lambda": false,
     "jsx-no-bind": true,
-    "jsx-curly-spacing": [true, "always"],
+    "jsx-curly-spacing": [false, "always"],
     "jsx-boolean-value": [true, "always"],
     "jsx-alignment": true
   }

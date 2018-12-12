@@ -1,6 +1,6 @@
 import * as React from 'react';
 import b from '../../middleware/b';
-import styled from "styled-components";
+import styled from 'styled-components';
 import './Lable.scss';
 
 interface IProps {
@@ -23,7 +23,7 @@ export default class Label extends React.Component<IProps, IState> {
     const {text} = this.props;
 
     return (
-        <p className={'error-label'}>{text}</p>
+        <p className={ 'error-label' }>{ text }</p>
     );
   }
 }

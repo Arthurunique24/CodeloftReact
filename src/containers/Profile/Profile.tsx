@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import Button from '../../components/Button/Button';
 import Label from '../../components/Label/Label';
-import Image from '../../components/Img/Img'
+import Image from '../../components/Img/Img';
 import { ICommonReducer } from '../../redux/common/common.reducer';
 import { setUserName } from '../../redux/common/common.action';
 
@@ -17,7 +17,7 @@ const ProfileWrapper = styled.div`
 interface IProps {
   username?: string;
   email?: string;
-  score?: string
+  score?: string;
 }
 
 interface IState {
@@ -34,7 +34,7 @@ class Profile extends React.Component<IProps, IState> {
   public render(): JSX.Element {
     return (
         <ProfileWrapper>
-          <Image imgSrc={'../statics/imgs/user-default.jpg'} imgClass={''}/>
+          <Image imgSrc={ '../statics/imgs/user-default.jpg' } imgClass={ '' }/>
           <Button text={ 'Back' }/>
           <Button text={ 'LogOut' }/>
         </ProfileWrapper>
