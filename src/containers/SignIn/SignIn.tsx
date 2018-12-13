@@ -8,6 +8,7 @@ import Label from '../../components/Label/Label';
 import { ICommonReducer } from '../../redux/common/common.reducer';
 import { Form, Field } from 'react-final-form';
 import { setUserName } from '../../redux/common/common.action';
+import { ILangReducer, changeLang } from '../../redux/lang/lang.action';
 
 /* tslint:disable:variable-name */
 const SignInWrapper = styled.div`
@@ -17,28 +18,33 @@ const SignInWrapper = styled.div`
 /* tslint:enable:variable-name */
 
 interface IProps {
+    loginPlaceholder?: string;
+    passwordPlaceholder?: string;
+    formAction?: any;
     // text?: string;
     // username?: string;
     // setUserName?: (value: string) => void;
 }
 
-interface IState {
-
-}
-
-class SignIn extends React.Component<IProps, IState> {
+class SignIn extends React.Component<IProps> {
     public constructor(props) {
         super(props);
         this.validate = this.validate.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+
     }
 
     public render(): JSX.Element {
+        const {loginPlaceholder} = this.props;
         return (
-            <Form
-                onSubmit={this.onSubmit}
-                render={() => (<Input/>)}
-            />
+            <SignInWrapper>
+                <Form
+                    onSubmit={this.onSubmit}
+                    render={() => (
+                        <Input placeholder={loginPlaceholder} onclick={this.onSubmit}/>)}
+                />
+                <Button text={'Back'}/>
+            </SignInWrapper>
         );
     }
 
@@ -52,19 +58,14 @@ class SignIn extends React.Component<IProps, IState> {
     }
 }
 
-const mapStateToProps = (state: { common: ICommonReducer; }) => {
+const mapStateToProps = (state: { lang: ILangReducer; }) => {
     return {
-        // username: state.common.userData.name,
-        // text: state.common.inputData.value,
+        loginPlaceholder: state.lang.signIn.loginPlaceholder,
     };
 };
 
 const mapDispatchToProps = dispatch => {
-    return {
-        // setUserName(value: string) {
-        //   dispatch(setUserName(value));
-        // },
-    };
+    return {};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

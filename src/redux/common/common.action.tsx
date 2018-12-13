@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { IUser } from 'yourTypes';
+import { IUser } from 'customTypes';
 
 import transport from '../../service/Transport/Transport';
 import { API_ACTION, SET_INPUT_DATA, SET_LOADING, SET_USER } from './common.constants';

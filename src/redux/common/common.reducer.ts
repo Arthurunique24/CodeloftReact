@@ -1,5 +1,5 @@
 import { SET_INPUT_DATA, SET_LOADING, SET_USER } from './common.constants';
-import { IInputData, ILoaderData, IUser, IAbout } from 'yourTypes';
+import { IInputData, ILoaderData, IUser, IAbout } from 'customTypes';
 import * as types from '../../store/types';
 
 export interface ICommonReducer {

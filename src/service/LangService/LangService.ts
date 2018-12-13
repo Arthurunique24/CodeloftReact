@@ -11,9 +11,7 @@ class LangService {
             localStorage[key] = JSON.stringify(langJson[key]);
         });
         localStorage.lang = this.lang;
-        setTimeout(() => {
-            this.changeLanguage(ENGLISH);
-        }, 3000);
+        setTimeout(() => this.changeLanguage('en'), 5000);
     }
 
     public changeLanguage(newLang) {
@@ -21,6 +19,10 @@ class LangService {
             this.lang = newLang;
             localStorage.lang = this.lang;
         }
+    }
+
+    public getLang() {
+        return this.lang;
     }
 
     public getWord(keyName) {

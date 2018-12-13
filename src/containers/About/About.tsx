@@ -43,7 +43,7 @@ class About extends React.Component<IProps, IState> {
     );
   }
 
-  public changeText(event): void {
+  public changeText(): void {
       this.props.aboutAction('example1');
   }
 
@@ -57,9 +57,7 @@ const mapStateToProps = (state: { common: ICommonReducer; }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-      aboutAction(text: string) {
-          dispatch(setAboutText(text));
-      },
+
   };
 };
 
