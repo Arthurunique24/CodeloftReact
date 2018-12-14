@@ -14,7 +14,6 @@ export enum SignInActionTypes {
 }
 
 export function signIn(state: ISignInReducer = initialState, action: any) {
-    console.log(action);
     switch (action.type) {
         case SignInActionTypes.SET_LOGIN:
             return {

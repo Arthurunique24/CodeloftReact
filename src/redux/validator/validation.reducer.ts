@@ -12,11 +12,11 @@ export interface IValidatorReducer {
 }
 
 const initialState: IValidatorReducer = {
-    signInLoginError: false,
-    signInPasswordError: false,
-    signUnLoginError: false,
-    signUnPasswordError: false,
-    signUnEmailError: false,
+    signInLoginError: true,
+    signInPasswordError: true,
+    signUnLoginError: true,
+    signUnPasswordError: true,
+    signUnEmailError: true,
 };
 
 export function validator(state: IValidatorReducer = initialState, action: any) {

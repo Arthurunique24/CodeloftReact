@@ -80,6 +80,7 @@ class SignIn extends React.Component<IProps> {
                         placeholder={passwordPlaceholder}
                         onChange={this.setPassword}
                         className={'signIn-form__password-input'}
+                        onBlur={this.validateInput}
                     />
                 </form>
                 <Button text={'Sign In'} onClick={this.onSubmit} main={true}/>
@@ -89,11 +90,24 @@ class SignIn extends React.Component<IProps> {
     }
 
     public onSubmit(): void {
-        const requestBody = {
-            login: this.props.login,
-            password: this.props.password,
-        };
-        userService.logIn(requestBody);
+        const event = new Event('blur');
+        document.querySelector('.signIn-form__login-input').dispatchEvent(event);
+        document.querySelector('.signIn-form__password-input').dispatchEvent(event);
+        console.log(this.props.hasLoginError);
+        console.log(this.props.hasPasswordError);
+        if (!this.props.hasLoginError && !this.props.hasPasswordError) {
+            const requestBody = {
+                login: this.props.login,
+                password: this.props.password,
+            };
+            userService.logIn(requestBody)
+                .then((ans) => {
+                    if (ans !== 'ok') {
+                        this.errors.loginError = ans.What || 'Internal error';
+                        this.props.setLoginError(true);
+                    }
+                });
+        }
     }
 
     public componentWillMount(): void {
@@ -112,11 +126,17 @@ class SignIn extends React.Component<IProps> {
 
     private validateInput(event: ChangeEvent<HTMLInputElement>) {
         if (event.target.className.match(/login/ig)) {
+            this.props.setLoginError(false);
             this.errors.loginError = validator.validateLogin(event.target.value);
-            this.props.setLoginError(true);
+            if (this.errors.loginError) {
+                this.props.setLoginError(true);
+            }
         } else if (event.target.className.match(/password/ig)) {
-            this.errors.passwordError = validator.validateLogin(event.target.value);
-            this.props.setPasswordError(true);
+            this.props.setPasswordError(false);
+            this.errors.passwordError = validator.validatePassword(event.target.value);
+            if (this.errors.passwordError) {
+                this.props.setPasswordError(true);
+            }
         }
     }
 

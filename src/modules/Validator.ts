@@ -44,7 +44,7 @@ class Validator {
 
     public validatePassword(value: string): string {
         let message = '';
-        const checks = [this.checkConfig.passwordMin, this.checkConfig.passwordMax, this.checkConfig.russian];
+        const checks = [this.checkConfig.russian, this.checkConfig.passwordMin, this.checkConfig.passwordMax];
         checks.forEach((check, i) => {
             if (!check(value)) {
                 message = this.getError(this.messageMap[i + 2]);
