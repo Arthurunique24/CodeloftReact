@@ -93,8 +93,6 @@ class SignIn extends React.Component<IProps> {
         const event = new Event('blur');
         document.querySelector('.signIn-form__login-input').dispatchEvent(event);
         document.querySelector('.signIn-form__password-input').dispatchEvent(event);
-        console.log(this.props.hasLoginError);
-        console.log(this.props.hasPasswordError);
         if (!this.props.hasLoginError && !this.props.hasPasswordError) {
             const requestBody = {
                 login: this.props.login,
