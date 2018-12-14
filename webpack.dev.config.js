@@ -14,14 +14,6 @@ module.exports = merge(common, {
 					cacheDirectory: true
 				}
 			},
-			// {
-			// 	test: /.ts$/,
-			// 	loader: 'babel-loader',
-			// 	exclude: /(node_modules|bower_components)/,
-			// 	options: {
-			// 		presets: ['@babel/preset-typescript'],
-			// 	},
-			// }
 		]
 	},
 	devServer: {
@@ -38,11 +30,11 @@ module.exports = merge(common, {
 		proxy: [
 			{
 				context: ['/api/**'],
-				target: 'https://backend.com/',
+				target: 'https://backend.codeloft.ru/',
 				pathRewrite: {'^/api': '/'},
 				secure: false,
-				onProxyReq: (proxyReq, req, res) => {
-					proxyReq.setHeader('Host', 'backend.com');
+				onProxyReq: (proxyReq) => {
+					proxyReq.setHeader('Host', 'backend.codeloft.ru');
 				}
 			}
 		]

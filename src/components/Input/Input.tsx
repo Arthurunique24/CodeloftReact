@@ -6,13 +6,16 @@ import { ICommonReducer } from '../../redux/common/common.reducer';
 import { setInputData } from '../../redux/common/common.action';
 
 import './Input.scss';
+import { ChangeEvent } from 'react';
 
 interface IProps {
     text?: string;
     placeholder?: string;
     type?: string;
     setInputData?: (value: string) => void;
-    onChange?: (event: object) => void;
+    onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+    onBlur?: (event: ChangeEvent<HTMLInputElement>) => void;
+    className?: string;
 }
 
 interface IState {
@@ -29,21 +32,28 @@ class Input extends React.Component<IProps, IState> {
         const {placeholder} = this.props;
         const {type} = this.props;
         const {onChange} = this.props;
+        const {onBlur} = this.props;
+        const {className} = this.props;
 
         return (
-            <input className={'input'} type={type} value={text} placeholder={placeholder} onChange={onChange}/>
+            <input
+                className={className ? `input ${className}` : 'input'}
+                type={type}
+                value={text}
+                placeholder={placeholder}
+                onChange={onChange}
+                onBlur={onBlur}
+            />
         );
     }
 }
 
 const mapStateToProps = (state: { common: ICommonReducer; }) => {
-    return {
-    };
+    return {};
 };
 
 const mapDispatchToProps = dispatch => {
-    return {
-    };
+    return {};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Input);

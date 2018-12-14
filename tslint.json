@@ -39,7 +39,7 @@
     "space-before-function-paren": [true, {"anonymous": "always", "named": "never", "asyncArrow": "always"}],
     "member-ordering": [true, {"order": "fields-first"}],
     "no-shadowed-variable": false,
-    "arrow-parens": [true, "ban-single-arg-parens"],
+    "arrow-parens": [false, "ban-single-arg-parens"],
 
     "jsx-self-close": true,
     "jsx-space-before-trailing-slash": false,
