@@ -7,17 +7,12 @@ import { setInputData } from '../../redux/common/common.action';
 
 import './Input.scss';
 
-/* tslint:disable:variable-name */
-const InputWrapper = styled.div`
-  
-`;
-
-/* tslint:enable:variable-name */
-
 interface IProps {
     text?: string;
     placeholder?: string;
+    type?: string;
     setInputData?: (value: string) => void;
+    onChange?: (event: object) => void;
 }
 
 interface IState {
@@ -27,36 +22,27 @@ interface IState {
 class Input extends React.Component<IProps, IState> {
     public constructor(props: IProps) {
         super(props);
-        this.onChange = this.onChange.bind(this);
     }
 
     public render(): JSX.Element {
         const {text} = this.props;
         const {placeholder} = this.props;
+        const {type} = this.props;
+        const {onChange} = this.props;
 
         return (
-            <InputWrapper>
-                <input className={'input'} value={text} placeholder={placeholder} onChange={this.onChange}/>
-            </InputWrapper>
+            <input className={'input'} type={type} value={text} placeholder={placeholder} onChange={onChange}/>
         );
-    }
-
-    private onChange(event) {
-        this.props.setInputData(event.target.value);
     }
 }
 
 const mapStateToProps = (state: { common: ICommonReducer; }) => {
     return {
-        text: state.common.inputData.value,
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        setInputData(value: string) {
-            dispatch(setInputData(value));
-        },
     };
 };
 

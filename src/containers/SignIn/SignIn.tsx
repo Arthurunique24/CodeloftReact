@@ -5,10 +5,11 @@ import styled from 'styled-components';
 import Button from '../../components/Button/Button';
 import Input from '../../components/Input/Input';
 import Label from '../../components/Label/Label';
-import { ICommonReducer } from '../../redux/common/common.reducer';
-import { Form, Field } from 'react-final-form';
 import { setUserName } from '../../redux/common/common.action';
-import { ILangReducer, changeLang } from '../../redux/lang/lang.action';
+import { changeLang } from '../../redux/lang/lang.action';
+import { setLogin, setPassword } from '../../redux/signIn/signIn.action';
+import { ILangReducer } from '../../redux/lang/lang.reducer';
+import { ISignInReducer, signIn } from '../../redux/signIn/signIn.reducer';
 
 /* tslint:disable:variable-name */
 const SignInWrapper = styled.div`
@@ -21,8 +22,8 @@ interface IProps {
     loginPlaceholder?: string;
     passwordPlaceholder?: string;
     formAction?: any;
-    // text?: string;
-    // username?: string;
+    login?: string;
+    password?: string;
     // setUserName?: (value: string) => void;
 }
 
@@ -31,21 +32,37 @@ class SignIn extends React.Component<IProps> {
         super(props);
         this.validate = this.validate.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
-
+        this.setLogin = this.setLogin.bind(this);
     }
 
     public render(): JSX.Element {
         const {loginPlaceholder} = this.props;
+        const {passwordPlaceholder} = this.props;
+        const {login} = this.props;
+        const {password} = this.props;
         return (
             <SignInWrapper>
-                <Form
-                    onSubmit={this.onSubmit}
-                    render={() => (
-                        <Input placeholder={loginPlaceholder} onclick={this.onSubmit}/>)}
-                />
+                <form className={'sinIn-block__signIn-form'}>
+                    <Input
+                        text={login}
+                        placeholder={loginPlaceholder}
+                        onChange={this.setLogin}
+                    />
+
+                    <Input
+                        text={password}
+                        type={'password'}
+                        placeholder={passwordPlaceholder}
+                    />
+                </form>
+                <Button text={'Sign In'} onClick={this.onSubmit}/>
                 <Button text={'Back'}/>
             </SignInWrapper>
         );
+    }
+
+    public onSubmit(values): void {
+        console.log(values);
     }
 
     private validate(value) {
@@ -53,19 +70,25 @@ class SignIn extends React.Component<IProps> {
         return [];
     }
 
-    private onSubmit(data) {
-        alert(JSON.stringify(data));
+    private setLogin(event): void {
+        setLogin(event.target.value);
     }
 }
 
-const mapStateToProps = (state: { lang: ILangReducer; }) => {
+const mapStateToProps = (state: { lang: ILangReducer, signIn: ISignInReducer }) => {
     return {
-        loginPlaceholder: state.lang.signIn.loginPlaceholder,
+        loginPlaceholder: state.lang.langObject['signIn.login'][state.lang.lang],
+        passwordPlaceholder: state.lang.langObject['signIn.password'][state.lang.lang],
+        login: state.signIn.login,
     };
 };
 
 const mapDispatchToProps = dispatch => {
-    return {};
+    return {
+        formAction(login: string) {
+            dispatch(setLogin(login));
+        },
+    };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

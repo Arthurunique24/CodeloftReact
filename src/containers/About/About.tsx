@@ -8,6 +8,7 @@ import Label from '../../components/Label/Label';
 import * as aboutAction from '../../store/actions';
 import { bindActionCreators } from 'redux';
 import { setAboutText } from '../../store/actions';
+import { changeLang } from '../../redux/lang/lang.action';
 
 /* tslint:disable:variable-name */
 const MainWrapper = styled.div`
@@ -20,11 +21,7 @@ interface IProps {
   aboutAction?: any;
 }
 
-interface IState {
-
-}
-
-class About extends React.Component<IProps, IState> {
+class About extends React.Component<IProps> {
   public constructor(props) {
     super(props);
     this.changeText = this.changeText.bind(this);

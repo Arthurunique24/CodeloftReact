@@ -1,5 +1,4 @@
 import * as React from 'react';
-import b from '../../middleware/b';
 
 import './Button.scss';
 
@@ -8,14 +7,7 @@ interface IProps {
   onClick?: (event) => void;
 }
 
-interface IState {
-}
-
-export default class Button extends React.Component<IProps, IState> {
-  public static defaultProps: Partial<IProps> = {
-    text: 'Я есть кнопка',
-  };
-  
+export default class Button extends React.Component<IProps> {
   public constructor(props: IProps) {
     super(props);
     this.onCLick = this.onCLick.bind(this);
@@ -23,7 +15,7 @@ export default class Button extends React.Component<IProps, IState> {
   
   public render(): JSX.Element {
     const {text} = this.props;
-    
+
     return (
       <div onClick={ this.onCLick } className={ 'button' }>
         <span>{ text }</span>

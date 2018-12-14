@@ -15,9 +15,4 @@ declare module 'customTypes' {
         text: string;
     }
 
-    export interface ISingIn {
-        loginPlaceholder: string;
-        passwordPlaceholder: string;
-    }
-
 }
