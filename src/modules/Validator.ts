@@ -54,7 +54,7 @@ class Validator {
     }
 
     public validateEmail(value: string): string {
-        return this.checkConfig.email(value)? this.getError('email') : '';
+        return this.checkConfig.email(value)? '': this.getError('email');
     }
 
     public validateRepeat(value: string, repeat: string): string {

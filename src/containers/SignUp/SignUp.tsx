@@ -21,7 +21,7 @@ const SignUpWrapper = styled.div`
 
 /* tslint:enable:variable-name */
 
-interface ISignInError {
+interface ISignUpError {
     loginError?: string;
     passwordError?: string;
     emailError?: string;
@@ -45,18 +45,18 @@ interface IProps {
     password?: string;
     email?: string;
     repeat?: string;
-    hasLoginError?: string;
-    hasPasswordError?: string;
-    hasEmailError?: string;
-    hasRepeatError?: string;
+    hasLoginError?: boolean;
+    hasPasswordError?: boolean;
+    hasEmailError?: boolean;
+    hasRepeatError?: boolean;
 }
 
-class SignIn extends React.Component<IProps> {
-    private errors: ISignInError = {
+class SignUp extends React.Component<IProps> {
+    private errors: ISignUpError = {
         loginError: '',
         passwordError: '',
         emailError: '',
-
+        repeatError: '',
     };
 
     public constructor(props) {
@@ -95,7 +95,7 @@ class SignIn extends React.Component<IProps> {
                         className={'signUp-form__login-input'}
                         onBlur={this.validateInput}
                     />
-                    {hasEmailError ? <Label text={this.errors.passwordError}/> : ''}
+                    {hasEmailError ? <Label text={this.errors.emailError}/> : ''}
                     <Input
                         text={email}
                         placeholder={emailPlaceholder}
@@ -130,17 +130,18 @@ class SignIn extends React.Component<IProps> {
 
     public onSubmit(): void {
         const event = new Event('blur');
-        document.querySelector('.signUn-form__login-input').dispatchEvent(event);
-        document.querySelector('.signUn-form__password-input').dispatchEvent(event);
-        document.querySelector('.signUn-form__email-input').dispatchEvent(event);
-        document.querySelector('.signUn-form__repeat-input').dispatchEvent(event);
+        document.querySelector('.signUp-form__login-input').dispatchEvent(event);
+        document.querySelector('.signUp-form__password-input').dispatchEvent(event);
+        document.querySelector('.signUp-form__email-input').dispatchEvent(event);
+        document.querySelector('.signUp-form__repeat-input').dispatchEvent(event);
         if (!this.props.hasLoginError && !this.props.hasPasswordError
             && !this.props.hasEmailError && !this.props.hasRepeatError) {
             const requestBody = {
                 login: this.props.login,
                 password: this.props.password,
+                email: this.props.email,
             };
-            userService.logIn(requestBody)
+            userService.register(requestBody)
                 .then((ans) => {
                     if (ans !== 'ok') {
                         this.errors.loginError = ans.What || 'Internal error';
@@ -185,8 +186,7 @@ class SignIn extends React.Component<IProps> {
             }
         } else if (event.target.className.match(/repeat/ig)) {
             this.props.setRepeatError(false);
-            this.errors.emailError = validator.validateRepeat(event.target.value,
-                document.querySelector('.signUn-form__password-input').innerHTML.toString());
+            this.errors.repeatError = validator.validateRepeat(event.target.value, this.props.password);
             if (this.errors.repeatError) {
                 this.props.setRepeatError(true);
             }
@@ -220,8 +220,8 @@ const mapStateToProps = (state: { lang: ILangReducer, signUp: ISignUpReducer, va
         password: state.signUp.password,
         email: state.signUp.email,
         repeat: state.signUp.passwordRepeat,
-        hasLoginError: state.validator.signInLoginError,
-        hasPasswordError: state.validator.signInPasswordError,
+        hasLoginError: state.validator.signUpLoginError,
+        hasPasswordError: state.validator.signUpPasswordError,
         hasEmailError: state.validator.signUpEmailError,
         hasRepeatError: state.validator.signUpRepeatError,
     };
@@ -256,4 +256,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

@@ -35,8 +35,8 @@ interface IProps {
     setPasswordError?: (wrong: boolean) => void;
     login?: string;
     password?: string;
-    hasLoginError?: string;
-    hasPasswordError?: string;
+    hasLoginError?: boolean;
+    hasPasswordError?: boolean;
 }
 
 class SignIn extends React.Component<IProps> {
