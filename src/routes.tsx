@@ -7,6 +7,7 @@ import SignUp from './containers/SignUp/SignUp';
 import About from './containers/About/About';
 import Profile from './containers/Profile/Profile';
 import NotFound from './containers/NotFound/NotFound';
+import HighScore from './containers/HighScore/HighScore';
 
 export const PATHS = {
   MENU: '/',
@@ -30,6 +31,7 @@ export const routes: JSX.Element = (
     <Route exact={ true } path={ PATHS.PROFILE } component={ Profile } />
     <Route exact={ true } path={ PATHS.ABOUT } component={ About } />
     <Route exact={ true } path={ PATHS.ERROR } component={ NotFound } />
+    <Route exact={ true } path={ PATHS.HIGH_SCORE } component={ HighScore } />
     <Route render={ () => <span>Тоже не найдено</span> } />
   </Switch>
 );

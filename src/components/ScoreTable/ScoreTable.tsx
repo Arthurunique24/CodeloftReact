@@ -26,7 +26,7 @@ export class ScoreTable extends React.Component<IProps> {
         const {users} = this.props;
 
         return (
-            <div className={'leaders-block__users-block'}>
+            <div className='leaders-block__users-block'>
                 {users.map((user) => <p key={getKey(user.nick)}>{user.nick} {user.score}</p>)}
             </div>
         );
