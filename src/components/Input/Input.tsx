@@ -1,12 +1,9 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
-
 import { ICommonReducer } from '../../redux/common/common.reducer';
-import { setInputData } from '../../redux/common/common.action';
 
-import './Input.scss';
 import { ChangeEvent } from 'react';
+import './Input.scss';
 
 interface IProps {
     text?: string;
@@ -18,11 +15,7 @@ interface IProps {
     className?: string;
 }
 
-interface IState {
-
-}
-
-class Input extends React.Component<IProps, IState> {
+class Input extends React.Component<IProps> {
     public constructor(props: IProps) {
         super(props);
     }

@@ -23,7 +23,7 @@
     "prefer-object-spread": true,
     "no-return-await": true,
     "no-for-in-array": true,
-    "no-string-literal": true,
+    "no-string-literal": false,
     "no-unused-variable": true,
     "no-unused-expression": true,
     "no-empty-interface": false,

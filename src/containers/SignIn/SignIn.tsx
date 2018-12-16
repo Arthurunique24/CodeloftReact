@@ -37,6 +37,8 @@ interface IProps {
     password?: string;
     hasLoginError?: boolean;
     hasPasswordError?: boolean;
+    loginText?: string;
+    backText?: string;
 }
 
 class SignIn extends React.Component<IProps> {
@@ -61,6 +63,8 @@ class SignIn extends React.Component<IProps> {
         const {password} = this.props;
         const {hasLoginError} = this.props;
         const {hasPasswordError} = this.props;
+        const {loginText} = this.props;
+        const {backText} = this.props;
 
         return (
             <SignInWrapper>
@@ -83,8 +87,8 @@ class SignIn extends React.Component<IProps> {
                         onBlur={this.validateInput}
                     />
                 </form>
-                <Button text={'Sign In'} onClick={this.onSubmit} main={true}/>
-                <Button text={'Back'}/>
+                <Button text={loginText} onClick={this.onSubmit} main={true}/>
+                <Button text={backText}/>
             </SignInWrapper>
         );
     }
@@ -151,6 +155,8 @@ const mapStateToProps = (state: { lang: ILangReducer, signIn: ISignInReducer, va
     return {
         loginPlaceholder: state.lang.langObject['signIn.login'][state.lang.lang],
         passwordPlaceholder: state.lang.langObject['signIn.password'][state.lang.lang],
+        loginText: state.lang.langObject['main.signIn'][state.lang.lang],
+        backText: state.lang.langObject['buttonBack'][state.lang.lang],
         login: state.signIn.login,
         password: state.signIn.password,
         hasLoginError: state.validator.signInLoginError,

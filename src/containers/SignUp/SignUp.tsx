@@ -49,6 +49,8 @@ interface IProps {
     hasPasswordError?: boolean;
     hasEmailError?: boolean;
     hasRepeatError?: boolean;
+    loginText?: string;
+    backText?: string;
 }
 
 class SignUp extends React.Component<IProps> {
@@ -83,6 +85,8 @@ class SignUp extends React.Component<IProps> {
         const {hasPasswordError} = this.props;
         const {hasEmailError} = this.props;
         const {hasRepeatError} = this.props;
+        const {loginText} = this.props;
+        const {backText} = this.props;
 
         return (
             <SignUpWrapper>
@@ -122,8 +126,8 @@ class SignUp extends React.Component<IProps> {
                         onBlur={this.validateInput}
                     />
                 </form>
-                <Button text={'Sign Up'} onClick={this.onSubmit} main={true}/>
-                <Button text={'Back'}/>
+                <Button text={loginText} onClick={this.onSubmit} main={true}/>
+                <Button text={backText}/>
             </SignUpWrapper>
         );
     }
@@ -216,6 +220,8 @@ const mapStateToProps = (state: { lang: ILangReducer, signUp: ISignUpReducer, va
         passwordPlaceholder: state.lang.langObject['signIn.password'][state.lang.lang],
         emailPlaceholder: state.lang.langObject['signUp.email'][state.lang.lang],
         repeatPlaceholder: state.lang.langObject['signUp.repeatPassword'][state.lang.lang],
+        loginText: state.lang.langObject['main.signIn'][state.lang.lang],
+        backText: state.lang.langObject['buttonBack'][state.lang.lang],
         login: state.signUp.login,
         password: state.signUp.password,
         email: state.signUp.email,
