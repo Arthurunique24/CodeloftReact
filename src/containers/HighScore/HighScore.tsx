@@ -22,20 +22,28 @@ interface IProps {
 
 interface IState {
     numOfPages?: number;
-    currentActive?: number;
+    currentActive: number;
     pagesArray?: number[];
     minPage?: number;
     users?: IUserScore[];
 }
 
 class HighScore extends React.Component<IProps, IState> {
+    private copyState: IState;
     public constructor(props) {
         super(props);
-        this.state = {
-            currentActive: 1,
+        this.copyState = {
             minPage: 1,
             users: [],
             pagesArray: [],
+            currentActive: 1,
+        };
+        this.state = {
+            minPage: 1,
+            users: [],
+            pagesArray: [],
+            currentActive: 1,
+            numOfPages: 1,
         };
         this.pageForward = this.pageForward.bind(this);
         this.pageBack = this.pageBack.bind(this);
@@ -60,41 +68,45 @@ class HighScore extends React.Component<IProps, IState> {
     }
 
     public componentWillMount() {
-        return Transport.Get('/user').then((responseJSON) => responseJSON.json())
+        Transport.Get('/user').then((responseJSON) => responseJSON.json())
             .then((response) => {
                 this.setState({numOfPages: response.pagesCount});
+                this.copyState.numOfPages = response.pagesCount;
                 this.paginate();
             });
     }
 
     private pageBack() {
-        if (this.state.currentActive > 1) {
-            this.setState({currentActive: this.state.currentActive - 1});
-            this.paginate();
-        }
+        this.copyState.currentActive = this.copyState.currentActive - 1;
+        this.paginate();
     }
 
     private pageForward() {
-        if (this.state.currentActive < this.state.numOfPages) {
-            this.setState({currentActive: this.state.currentActive + 1});
-            this.paginate();
-        }
+        this.copyState.currentActive = this.copyState.currentActive + 1;
+        this.paginate();
     }
 
     private paginate() {
-        if (this.state.currentActive - this.state.minPage > 2) {
-            this.setState({minPage: this.state.minPage + this.state.currentActive - this.state.minPage - 2});
+        if (this.copyState.currentActive < 1) {
+            this.copyState.currentActive = 1;
+        } else if (this.copyState.currentActive > this.copyState.numOfPages) {
+            this.copyState.currentActive = this.copyState.numOfPages;
         }
-        if (this.state.currentActive - this.state.minPage < 2 && this.state.minPage > 1) {
-            this.setState({minPage: this.state.minPage - (2 - (this.state.currentActive - this.state.minPage))});
+        if (this.copyState.currentActive - this.copyState.minPage > 2) {
+            this.copyState.minPage += this.copyState.currentActive - this.copyState.minPage - 2;
+        }
+        if (this.copyState.currentActive - this.copyState.minPage < 2 && this.copyState.minPage > 1) {
+            this.copyState.minPage -= (2 - (this.copyState.currentActive - this.copyState.minPage));
         }
         const tempPointers: number[] = [];
-        for (let i = Math.max(1, this.state.minPage); i <= Math.min(this.state.minPage + 4, this.state.numOfPages); i++) {
+        for (let i = Math.max(1, this.copyState.minPage); i <= Math.min(this.copyState.minPage + 4, this.copyState.numOfPages); i++) {
             tempPointers.push(i);
         }
+        console.log(tempPointers);
         this.setState({pagesArray: tempPointers});
+        this.setState({currentActive: this.copyState.currentActive});
         const tempArray: IUserScore[] = [];
-        Transport.Get(`/user?page=${this.state.currentActive}&page_size=5`)
+        Transport.Get(`/user?page=${this.copyState.currentActive}&page_size=5`)
             .then((responseJSON) => responseJSON.json())
             .then((response) => {
                 response.users.forEach((user) => {
