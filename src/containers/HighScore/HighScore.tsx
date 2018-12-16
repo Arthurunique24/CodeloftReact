@@ -59,7 +59,15 @@ class HighScore extends React.Component<IProps, IState> {
                 <ScoreTable users={this.state.users}/>
                 <div className={'leaders-block__pagination-block'}>
                     <a onClick={this.pageBack}>{paginateBack}</a>
-                    {this.state.pagesArray.map((i) => <a key={i} className={this.state.currentActive === i? 'active': ''}>{i}</a>)}
+                    {this.state.pagesArray.map((i) => <a
+                        key={i}
+                        className={this.state.currentActive === i? 'active': ''}
+                        onClick={() => {
+                            this.copyState.currentActive = i;
+                            this.paginate();
+                        }}
+                    >{i}
+                    </a>)}
                     <a onClick={this.pageForward}>{paginateForward}</a>
                 </div>
                 <Button text={backText}/>
@@ -77,21 +85,20 @@ class HighScore extends React.Component<IProps, IState> {
     }
 
     private pageBack() {
-        this.copyState.currentActive = this.copyState.currentActive - 1;
-        this.paginate();
+        if (this.state.currentActive > 1) {
+            this.copyState.currentActive = this.copyState.currentActive - 1;
+            this.paginate();
+        }
     }
 
     private pageForward() {
-        this.copyState.currentActive = this.copyState.currentActive + 1;
-        this.paginate();
+        if (this.copyState.currentActive < this.copyState.numOfPages) {
+            this.copyState.currentActive = this.copyState.currentActive + 1;
+            this.paginate();
+        }
     }
 
     private paginate() {
-        if (this.copyState.currentActive < 1) {
-            this.copyState.currentActive = 1;
-        } else if (this.copyState.currentActive > this.copyState.numOfPages) {
-            this.copyState.currentActive = this.copyState.numOfPages;
-        }
         if (this.copyState.currentActive - this.copyState.minPage > 2) {
             this.copyState.minPage += this.copyState.currentActive - this.copyState.minPage - 2;
         }
@@ -102,7 +109,6 @@ class HighScore extends React.Component<IProps, IState> {
         for (let i = Math.max(1, this.copyState.minPage); i <= Math.min(this.copyState.minPage + 4, this.copyState.numOfPages); i++) {
             tempPointers.push(i);
         }
-        console.log(tempPointers);
         this.setState({pagesArray: tempPointers});
         this.setState({currentActive: this.copyState.currentActive});
         const tempArray: IUserScore[] = [];
