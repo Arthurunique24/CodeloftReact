@@ -8,18 +8,21 @@ import { configureStore } from './store';
 import { routes } from './routes';
 
 import App from './containers/App/App';
+import userService from './service/UserService/UserService';
 
 import './statics/scss/main.scss';
 
 const store = configureStore();
 
-ReactDOM.render(
-  <Provider store={ store }>
-    <Router history={ history }>
-      <div className='app'>
-        <App routes={ routes } />
-      </div>
-    </Router>
-  </Provider>,
-  document.getElementById('root'),
-);
+userService.checkAuth().then(() => {
+    ReactDOM.render(
+        <Provider store={ store }>
+            <Router history={ history }>
+                <div className='app'>
+                    <App routes={ routes } />
+                </div>
+            </Router>
+        </Provider>,
+        document.getElementById('root'),
+    );
+});
