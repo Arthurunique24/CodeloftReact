@@ -2,6 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
+import Header from '../../components/Header/Header';
 import Button from '../../components/Button/Button';
 import Input from '../../components/Input/Input';
 import { ICommonReducer } from '../../redux/common/common.reducer';
@@ -35,6 +36,7 @@ class Main extends React.Component<IProps, IState> {
       <MainWrapper>
         { /*<span>{ this.props.username || 'Пусто' }</span>*/ }
         { /*<Input placeholder={''}/>*/ }
+        <Header logo={ 'Tron 2D'}/>
         <Button className={ 'button' } text={ 'Single Player' } /*onClick={ this.customOnClick }*/ />
         <Button className={ 'button' } text={ 'Multi Player' }/>
         <Button className={ 'button' } text={ 'Rules' } />
