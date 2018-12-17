@@ -13,6 +13,8 @@ import userService from '../../service/UserService/UserService';
 import validator from '../../modules/Validator';
 import { ChangeEvent } from 'react';
 import { setSignUpEmailError, setSignUpLoginError, setSignUpPasswordError, setSignUpRepeatError } from '../../redux/validator/validation.action';
+import { PATHS } from '../../routes';
+import { Link } from 'react-router-dom';
 
 /* tslint:disable:variable-name */
 const SignUpWrapper = styled.div`
@@ -127,7 +129,9 @@ class SignUp extends React.Component<IProps> {
                     />
                 </form>
                 <Button text={loginText} onClick={this.onSubmit} main={true}/>
-                <Button text={backText}/>
+                <Button
+                    link={<Link to={PATHS.MENU} className={'button'}>{backText}</Link>}
+                />
             </SignUpWrapper>
         );
     }

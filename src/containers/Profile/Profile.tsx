@@ -5,8 +5,10 @@ import styled from 'styled-components';
 import Button from '../../components/Button/Button';
 import UserInfo from '../../components/UserInfo/UserInfo';
 import userService from '../../service/UserService/UserService';
-import { ICommonReducer } from '../../redux/common/common.reducer';
 import '../../statics/scss/user-page.scss';
+import { ILangReducer } from '../../redux/lang/lang.reducer';
+import { PATHS } from '../../routes';
+import { Link } from 'react-router-dom';
 
 /* tslint:disable:variable-name */
 const ProfileWrapper = styled.div`
@@ -18,6 +20,8 @@ interface IProps {
     username?: string;
     email?: string;
     score?: string;
+    backText?: string;
+    logOutText?: string;
 }
 
 interface IState {
@@ -32,6 +36,9 @@ class Profile extends React.Component<IProps, IState> {
     }
 
     public render(): JSX.Element {
+        const {backText} = this.props;
+        const {logOutText} = this.props;
+
         return (
             <ProfileWrapper>
                 <img src='../statics/imgs/user-default.jpg' className={ 'profile-block__avatar' }/>
@@ -41,31 +48,24 @@ class Profile extends React.Component<IProps, IState> {
                     email={ userService.getUserInfo('email') }
                     score={ userService.getUserInfo('score') }
                 />
-                <Button text={ 'Back' }/>
-                <Button text={ 'LogOut' }/>
+                <Button text={ logOutText }/>
+                <Button
+                    link={<Link to={PATHS.MENU} className={'button'}>{backText}</Link>}
+                />
             </ProfileWrapper>
         );
     }
-
-    // private customOnClick(event) {
-    //   const {text, setUserName} = this.props;
-    //   setUserName(text);
-    // }
 }
 
-const mapStateToProps = (state: { common: ICommonReducer; }) => {
+const mapStateToProps = (state: { lang: ILangReducer }) => {
     return {
-        // username: state.common.userData.name,
-        // text: state.common.inputData.value,
+        backText: state.lang.langObject['buttonBack'][state.lang.lang],
+        logOutText: state.lang.langObject['profile.logOut'][state.lang.lang],
     };
 };
 
 const mapDispatchToProps = dispatch => {
-    return {
-        // setUserName(value: string) {
-        //   dispatch(setUserName(value));
-        // },
-    };
+    return {};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

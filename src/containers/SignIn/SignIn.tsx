@@ -13,6 +13,8 @@ import { IValidatorReducer } from '../../redux/validator/validation.reducer';
 import userService from '../../service/UserService/UserService';
 import validator from '../../modules/Validator';
 import { ChangeEvent } from 'react';
+import { PATHS } from '../../routes';
+import { Link } from 'react-router-dom';
 
 /* tslint:disable:variable-name */
 const SignInWrapper = styled.div`
@@ -87,8 +89,14 @@ class SignIn extends React.Component<IProps> {
                         onBlur={this.validateInput}
                     />
                 </form>
-                <Button text={loginText} onClick={this.onSubmit} main={true}/>
-                <Button text={backText}/>
+                <Button
+                    text={loginText}
+                    onClick={this.onSubmit}
+                    main={true}
+                />
+                <Button
+                    link={<Link to={PATHS.MENU} className={'button'}>{backText}</Link>}
+                />
             </SignInWrapper>
         );
     }

@@ -8,6 +8,8 @@ import { IUserScore, ScoreTable } from '../../components/ScoreTable/ScoreTable';
 import { ILangReducer } from '../../redux/lang/lang.reducer';
 import { ChangeEvent } from 'react';
 import Transport from '../../service/Transport/Transport';
+import { PATHS } from '../../routes';
+import { Link } from 'react-router-dom';
 
 /* tslint:disable:variable-name */
 const HighScoreWrapper = styled.div`
@@ -70,7 +72,9 @@ class HighScore extends React.Component<IProps, IState> {
                     </a>)}
                     <a onClick={this.pageForward}>{paginateForward}</a>
                 </div>
-                <Button text={backText}/>
+                <Button
+                    link={<Link to={PATHS.MENU} className={'button'}>{backText}</Link>}
+                />
             </HighScoreWrapper>
         );
     }

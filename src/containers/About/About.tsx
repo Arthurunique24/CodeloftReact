@@ -3,53 +3,53 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 import Button from '../../components/Button/Button';
-import { ICommonReducer } from '../../redux/common/common.reducer';
 import Label from '../../components/Label/Label';
-import * as aboutAction from '../../store/actions';
-import { bindActionCreators } from 'redux';
-import { setAboutText } from '../../store/actions';
-import { changeLang } from '../../redux/lang/lang.action';
+import { ILangReducer } from '../../redux/lang/lang.reducer';
+import { PATHS } from '../../routes';
+import { Link } from 'react-router-dom';
 
 /* tslint:disable:variable-name */
 const MainWrapper = styled.div`
   // some styles
 `;
-
 /* tslint:enable:variable-name */
 
 interface IProps {
     text?: string;
-    aboutAction?: any;
+    backText?: string;
 }
 
 class About extends React.Component<IProps> {
     public constructor(props) {
         super(props);
-        this.changeText = this.changeText.bind(this);
-        // this.customOnClick = this.customOnClick.bind(this);
     }
 
     public render(): JSX.Element {
         const {text} = this.props;
+        const {backText} = this.props;
+
         return (
             <MainWrapper>
                 <Label
                     text={text}
                 />
-                <Button text={'Back'} onClick={this.changeText}/>
+                <Button
+                    link={<Link to={PATHS.MENU} className={'button'}>{backText}</Link>}
+                />
+
             </MainWrapper>
         );
     }
 
-    public changeText(): void {
-        this.props.aboutAction('example1');
+    private goBack() {
+        history.pushState({url: PATHS.MENU}, '', PATHS.MENU);
     }
-
 }
 
-const mapStateToProps = (state: { common: ICommonReducer; }) => {
+const mapStateToProps = (state: { lang: ILangReducer }) => {
     return {
-        text: state.common.text.text,
+        backText: state.lang.langObject['buttonBack'][state.lang.lang],
+        text: state.lang.langObject['rules.text'][state.lang.lang],
     };
 };
 
