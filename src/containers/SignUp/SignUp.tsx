@@ -14,7 +14,7 @@ import validator from '../../modules/Validator';
 import { ChangeEvent } from 'react';
 import { setSignUpEmailError, setSignUpLoginError, setSignUpPasswordError, setSignUpRepeatError } from '../../redux/validator/validation.action';
 import { PATHS } from '../../routes';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 /* tslint:disable:variable-name */
 const SignUpWrapper = styled.div`
@@ -51,11 +51,15 @@ interface IProps {
     hasPasswordError?: boolean;
     hasEmailError?: boolean;
     hasRepeatError?: boolean;
-    loginText?: string;
+    regText?: string;
     backText?: string;
 }
 
-class SignUp extends React.Component<IProps> {
+interface IState {
+    needRedirect: boolean;
+}
+
+class SignUp extends React.Component<IProps, IState> {
     private errors: ISignUpError = {
         loginError: '',
         passwordError: '',
@@ -65,6 +69,9 @@ class SignUp extends React.Component<IProps> {
 
     public constructor(props) {
         super(props);
+        this.state = {
+            needRedirect: false,
+        };
         this.onSubmit = this.onSubmit.bind(this);
         this.setLogin = this.setLogin.bind(this);
         this.setPassword = this.setPassword.bind(this);
@@ -87,48 +94,53 @@ class SignUp extends React.Component<IProps> {
         const {hasPasswordError} = this.props;
         const {hasEmailError} = this.props;
         const {hasRepeatError} = this.props;
-        const {loginText} = this.props;
+        const {regText} = this.props;
         const {backText} = this.props;
 
+        if (userService.isLogIn()) {
+            return <Redirect to={PATHS.PROFILE}/>;
+        }
         return (
             <SignUpWrapper>
-                <form className={'sinUp-block__signUp-form'}>
-                    {hasLoginError ? <Label text={this.errors.loginError}/> : ''}
-                    <Input
-                        text={login}
-                        placeholder={loginPlaceholder}
-                        onChange={this.setLogin}
-                        className={'signUp-form__login-input'}
-                        onBlur={this.validateInput}
-                    />
-                    {hasEmailError ? <Label text={this.errors.emailError}/> : ''}
-                    <Input
-                        text={email}
-                        placeholder={emailPlaceholder}
-                        onChange={this.setEmail}
-                        className={'signUp-form__email-input'}
-                        onBlur={this.validateInput}
-                    />
-                    {hasPasswordError ? <Label text={this.errors.passwordError}/> : ''}
-                    <Input
-                        text={password}
-                        type={'password'}
-                        placeholder={passwordPlaceholder}
-                        onChange={this.setPassword}
-                        className={'signUp-form__password-input'}
-                        onBlur={this.validateInput}
-                    />
-                    {hasRepeatError ? <Label text={this.errors.repeatError}/> : ''}
-                    <Input
-                        text={repeat}
-                        type={'password'}
-                        placeholder={repeatPlaceholder}
-                        onChange={this.setRepeat}
-                        className={'signUp-form__repeat-input'}
-                        onBlur={this.validateInput}
-                    />
-                </form>
-                <Button text={loginText} onClick={this.onSubmit} main={true}/>
+                {!this.state.needRedirect? (
+                    <form className={'sinUp-block__signUp-form'}>
+                        {hasLoginError ? <Label text={this.errors.loginError}/> : ''}
+                        <Input
+                            text={login}
+                            placeholder={loginPlaceholder}
+                            onChange={this.setLogin}
+                            className={'signUp-form__login-input'}
+                            onBlur={this.validateInput}
+                        />
+                        {hasEmailError ? <Label text={this.errors.emailError}/> : ''}
+                        <Input
+                            text={email}
+                            placeholder={emailPlaceholder}
+                            onChange={this.setEmail}
+                            className={'signUp-form__email-input'}
+                            onBlur={this.validateInput}
+                        />
+                        {hasPasswordError ? <Label text={this.errors.passwordError}/> : ''}
+                        <Input
+                            text={password}
+                            type={'password'}
+                            placeholder={passwordPlaceholder}
+                            onChange={this.setPassword}
+                            className={'signUp-form__password-input'}
+                            onBlur={this.validateInput}
+                        />
+                        {hasRepeatError ? <Label text={this.errors.repeatError}/> : ''}
+                        <Input
+                            text={repeat}
+                            type={'password'}
+                            placeholder={repeatPlaceholder}
+                            onChange={this.setRepeat}
+                            className={'signUp-form__repeat-input'}
+                            onBlur={this.validateInput}
+                        />
+                    </form>
+                ): <Redirect to={PATHS.MENU}/>}
+                <Button text={regText} onClick={this.onSubmit} main={true}/>
                 <Button
                     link={<Link to={PATHS.MENU} className={'button'}>{backText}</Link>}
                 />
@@ -151,7 +163,9 @@ class SignUp extends React.Component<IProps> {
             };
             userService.register(requestBody)
                 .then((ans) => {
-                    if (ans !== 'ok') {
+                    if (ans === 'ok') {
+                        this.setState({needRedirect: true});
+                    } else {
                         this.errors.loginError = ans.What || 'Internal error';
                         this.props.setLoginError(true);
                     }
@@ -224,7 +238,7 @@ const mapStateToProps = (state: { lang: ILangReducer, signUp: ISignUpReducer, va
         passwordPlaceholder: state.lang.langObject['signIn.password'][state.lang.lang],
         emailPlaceholder: state.lang.langObject['signUp.email'][state.lang.lang],
         repeatPlaceholder: state.lang.langObject['signUp.repeatPassword'][state.lang.lang],
-        loginText: state.lang.langObject['main.signIn'][state.lang.lang],
+        regText: state.lang.langObject['main.signUp'][state.lang.lang],
         backText: state.lang.langObject['buttonBack'][state.lang.lang],
         login: state.signUp.login,
         password: state.signUp.password,

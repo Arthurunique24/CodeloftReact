@@ -14,7 +14,7 @@ import userService from '../../service/UserService/UserService';
 import validator from '../../modules/Validator';
 import { ChangeEvent } from 'react';
 import { PATHS } from '../../routes';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 /* tslint:disable:variable-name */
 const SignInWrapper = styled.div`
@@ -43,7 +43,11 @@ interface IProps {
     backText?: string;
 }
 
-class SignIn extends React.Component<IProps> {
+interface IState {
+    needRedirect: boolean;
+}
+
+class SignIn extends React.Component<IProps, IState> {
     private errors: ISignInError = {
         loginError: '',
         passwordError: '',
@@ -51,6 +55,9 @@ class SignIn extends React.Component<IProps> {
 
     public constructor(props) {
         super(props);
+        this.state = {
+            needRedirect: false,
+        };
         this.onSubmit = this.onSubmit.bind(this);
         this.setLogin = this.setLogin.bind(this);
         this.setPassword = this.setPassword.bind(this);
@@ -68,27 +75,32 @@ class SignIn extends React.Component<IProps> {
         const {loginText} = this.props;
         const {backText} = this.props;
 
+        if (userService.isLogIn()) {
+            return <Redirect to={PATHS.PROFILE}/>;
+        }
         return (
             <SignInWrapper>
-                <form className={'sinIn-block__signIn-form'}>
-                    {hasLoginError? <Label text={this.errors.loginError}/>: ''}
-                    <Input
-                        text={login}
-                        placeholder={loginPlaceholder}
-                        onChange={this.setLogin}
-                        className={'signIn-form__login-input'}
-                        onBlur={this.validateInput}
-                    />
-                    {hasPasswordError? <Label text={this.errors.passwordError}/>: ''}
-                    <Input
-                        text={password}
-                        type={'password'}
-                        placeholder={passwordPlaceholder}
-                        onChange={this.setPassword}
-                        className={'signIn-form__password-input'}
-                        onBlur={this.validateInput}
-                    />
-                </form>
+                {!this.state.needRedirect? (
+                    <form className={'sinIn-block__signIn-form'}>
+                        {hasLoginError ? <Label text={this.errors.loginError}/> : ''}
+                        <Input
+                            text={login}
+                            placeholder={loginPlaceholder}
+                            onChange={this.setLogin}
+                            className={'signIn-form__login-input'}
+                            onBlur={this.validateInput}
+                        />
+                        {hasPasswordError ? <Label text={this.errors.passwordError}/> : ''}
+                        <Input
+                            text={password}
+                            type={'password'}
+                            placeholder={passwordPlaceholder}
+                            onChange={this.setPassword}
+                            className={'signIn-form__password-input'}
+                            onBlur={this.validateInput}
+                        />
+                    </form>
+                ): <Redirect to={PATHS.MENU}/>}
                 <Button
                     text={loginText}
                     onClick={this.onSubmit}
@@ -112,7 +124,9 @@ class SignIn extends React.Component<IProps> {
             };
             userService.logIn(requestBody)
                 .then((ans) => {
-                    if (ans !== 'ok') {
+                    if (ans === 'ok') {
+                        this.setState({needRedirect: true});
+                    } else {
                         this.errors.loginError = ans.What || 'Internal error';
                         this.props.setLoginError(true);
                     }

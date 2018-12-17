@@ -8,12 +8,13 @@ import userService from '../../service/UserService/UserService';
 import '../../statics/scss/user-page.scss';
 import { ILangReducer } from '../../redux/lang/lang.reducer';
 import { PATHS } from '../../routes';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 /* tslint:disable:variable-name */
 const ProfileWrapper = styled.div`
   // some styles
 `;
+
 /* tslint:enable:variable-name */
 
 interface IProps {
@@ -25,35 +26,52 @@ interface IProps {
 }
 
 interface IState {
-
+    canRender: boolean;
 }
 
 class Profile extends React.Component<IProps, IState> {
     public constructor(props) {
         super(props);
-
-        // this.customOnClick = this.customOnClick.bind(this);
+        this.state = {
+            canRender: true,
+        };
+        this.logOut = this.logOut.bind(this);
     }
 
     public render(): JSX.Element {
         const {backText} = this.props;
         const {logOutText} = this.props;
+        const {canRender} = this.state;
 
-        return (
+        if (canRender && !userService.isLogIn()) {
+            return <Redirect to={PATHS.SIGN_IN}/>;
+        }
+        return(
             <ProfileWrapper>
-                <img src='../statics/imgs/user-default.jpg' className={ 'profile-block__avatar' }/>
+                {!canRender? <Redirect to={PATHS.MENU}/>: (
+                    <img src='../../statics/imgs/user-default.jpg' className={'profile-block__avatar'}/>
+                )}
                 <UserInfo
-                    className={ 'profile-block__user-info' }
-                    user={ userService.getUserInfo('login') }
-                    email={ userService.getUserInfo('email') }
-                    score={ userService.getUserInfo('score') }
+                    className={'profile-block__user-info'}
+                    user={userService.getUserInfo('login')}
+                    email={userService.getUserInfo('email')}
+                    score={userService.getUserInfo('score')}
                 />
-                <Button text={ logOutText }/>
+                <Button
+                    text={logOutText}
+                    onClick={this.logOut}
+                />
                 <Button
                     link={<Link to={PATHS.MENU} className={'button'}>{backText}</Link>}
                 />
             </ProfileWrapper>
         );
+    }
+
+    private logOut() {
+        userService.logOut().then(() => {
+            this.setState({canRender: false});
+        });
     }
 }
 
