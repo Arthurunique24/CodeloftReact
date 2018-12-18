@@ -9,6 +9,8 @@ import langService from '../../service/LangService/LangService';
 
 import './SinglePlayer.scss';
 import eventBus from '../../modules/EventBus';
+import { Redirect } from 'react-router';
+import { PATHS } from '../../routes';
 
 const SINGLE_PLAYER_GAME_FIELD = 'singleplayer-block__game-field';
 
@@ -25,6 +27,7 @@ interface IState {
     preSingleMode: boolean;
     gameMode: boolean;
     resultsMode: boolean;
+    needRedirect: boolean;
 }
 
 class SinglePlayer extends React.Component<IProps, IState> {
@@ -42,8 +45,10 @@ class SinglePlayer extends React.Component<IProps, IState> {
             preSingleMode: true,
             gameMode: false,
             resultsMode: false,
+            needRedirect: false,
         };
         this.onPlayClick = this.onPlayClick.bind(this);
+        this.quitWithEscape = this.quitWithEscape.bind(this);
         this.scoreHandler = this.redrawScore.bind(this);
         this.timerHandler = this.redrawTimer.bind(this);
         this.resultsHandler = this.showResults.bind(this);
@@ -70,6 +75,7 @@ class SinglePlayer extends React.Component<IProps, IState> {
                         playClick={this.onPlayClick}
                     />: ''
                 }
+                {!this.state.needRedirect? '': <Redirect to={PATHS.MENU}/>}
                 <GameBlock shown={this.state.gameMode} className={SINGLE_PLAYER_GAME_FIELD}/>: ''
                 <GameInfo shown={this.state.gameMode}/>: ''
                 {this.state.resultsMode ?
@@ -79,15 +85,19 @@ class SinglePlayer extends React.Component<IProps, IState> {
         );
     }
 
-    public componentWillMount() {
+    public componentWillMount(): void {
+        window.addEventListener('keydown', this.quitWithEscape);
         const floorElements = document.getElementsByClassName('main-content__logo') as HTMLCollectionOf<HTMLElement>;
         floorElements[0].style.display = 'none';
     }
 
-    public componentWillUnmount() {
+    public componentWillUnmount(): void {
+        window.removeEventListener('keydown', this.quitWithEscape);
         const floorElements = document.getElementsByClassName('main-content__logo') as HTMLCollectionOf<HTMLElement>;
         floorElements[0].style.display = 'block';
-        this.endGame();
+        if (this.gameHandler) {
+            this.endGame();
+        }
     }
 
     private onPlayClick() {
@@ -121,10 +131,14 @@ class SinglePlayer extends React.Component<IProps, IState> {
         this.scoreLabel[0].innerText = `${langService.getWord('gameResults.score')} ${value}`;
     }
 
+    private quitWithEscape(event) {
+        if (event.key === 'Escape' && event.type === 'keydown') {
+            this.setState({needRedirect: true});
+        }
+    }
+
     private endGame() {
         document.body.style.cursor = 'default';
-        // this.scoreLabel[0].innerHTML = `${langService.getWord('gameResults.score')} ${this.gameHandler.getScore()}`;
-        // this.resultBlock.goalsLabel.innerHTML = `${langService.getWord('gameResults.goals')} ${this.gameHandler.getGoalsPassed()}`;
         eventBus.off('timerStop', this.resultsHandler);
         eventBus.off('timerTick', this.timerHandler);
         eventBus.off('scoreRedraw', this.scoreHandler);
