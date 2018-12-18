@@ -2,12 +2,14 @@ import Arena from './Arena/Arena.js';
 import Player from './Player/Player';
 
 export default class BaseGameHandler {
-    private keyCodeMap: object;
-    private arena: Arena;
-    private players: Player[];
-    private protagonist: Player;
+    protected arena: Arena;
+    protected players: Player[];
+    protected protagonist: Player;
+    protected keyCodeMap: object;
+    /* tslint:disable:no-any */
+    protected gameLoops: any[];
+    /* tslint:enable:no-any */
     private readonly keyHandler: () => void;
-    private gameLoops: number[];
 
     constructor(players, arenaClassName) {
         this.keyCodeMap = {

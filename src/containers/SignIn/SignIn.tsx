@@ -15,6 +15,7 @@ import validator from '../../modules/Validator';
 import { ChangeEvent } from 'react';
 import { PATHS } from '../../routes';
 import { Link, Redirect } from 'react-router-dom';
+import { changeLang } from '../../redux/lang/lang.action';
 
 /* tslint:disable:variable-name */
 const SignInWrapper = styled.div`
