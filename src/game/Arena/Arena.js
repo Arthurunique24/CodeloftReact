@@ -1,6 +1,6 @@
-import Goal from '../Goal/Goal.js';
+import Goal from '../Goal/Goal.ts';
 import eventBus from '../../modules/EventBus/EventBus.js';
-import Bonus from '../Bonus/Bonus.js';
+import Bonus from '../Bonus/Bonus.ts';
 
 const SCORE_RATE = 2;
 const GOAL_RADIUS = 10;

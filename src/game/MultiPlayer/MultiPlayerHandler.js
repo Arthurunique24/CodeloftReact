@@ -1,4 +1,4 @@
-import BaseGameHandler from '../BaseGameHandler.js';
+import BaseGameHandler from '../BaseGameHandler.ts';
 import eventBus from '../../modules/EventBus/EventBus.js';
 import GameSocket from '../../services/GameSocket/GameSocket.js';
 

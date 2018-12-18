@@ -11,7 +11,6 @@ interface IProps {
     mainLabel: string;
     playText: string;
     backText: string;
-    backClick?: () => void;
     playClick?: () => void;
 }
 
@@ -25,6 +24,7 @@ export default class PreSinglePlayer extends React.Component<IProps, IState> {
         this.state = {
             needRedirect: false,
         };
+        this.onPlayClick = this.onPlayClick.bind(this);
         this.onBackClick = this.onBackClick.bind(this);
     }
 
@@ -69,9 +69,12 @@ export default class PreSinglePlayer extends React.Component<IProps, IState> {
         );
     }
 
+    private onPlayClick() {
+        const { playClick } = this.props;
+        playClick();
+    }
+
     private onBackClick() {
-        const {backClick} = this.props;
         this.setState({needRedirect: true});
-        backClick();
     }
 }

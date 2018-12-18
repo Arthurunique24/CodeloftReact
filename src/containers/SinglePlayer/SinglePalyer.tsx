@@ -1,10 +1,12 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import PreSinglePlayer from '../../components/PreSinglePlayer/PreSinglePlayer';
+import GameBlock from '../../components/GameBlock/GameBlock';
 import { ILangReducer } from '../../redux/lang/lang.reducer';
-import { parseAll } from '../../service/UrlParser/UrlParser';
 
 import './SinglePlayer.scss';
+
+const SINGLE_PLAYER_GAME_FIELD = 'singleplayer-block__game-field';
 
 interface IProps {
     scoreTip: string;
@@ -15,9 +17,21 @@ interface IProps {
     backText: string;
 }
 
-class SinglePlayer extends React.Component<IProps> {
+interface IState {
+    preSingleMode: boolean;
+    gameMode: boolean;
+    resultsMode: boolean;
+}
+
+class SinglePlayer extends React.Component<IProps, IState> {
     public constructor(props) {
         super(props);
+        this.state = {
+            preSingleMode: true,
+            gameMode: false,
+            resultsMode: false,
+        };
+        this.onPlayClick = this.onPlayClick.bind(this);
     }
 
     public render(): JSX.Element {
@@ -30,14 +44,23 @@ class SinglePlayer extends React.Component<IProps> {
 
         return (
             <div className='singleplayer-block'>
-                <PreSinglePlayer
-                    scoreTip={ scoreTip }
-                    controlTip={ controlTip }
-                    goalTip={ goalTip }
-                    mainLabel={ mainLabel }
-                    playText={ playText}
-                    backText={ backText }
-                />
+                {this.state.preSingleMode ?
+                    <PreSinglePlayer
+                        scoreTip={scoreTip}
+                        controlTip={controlTip}
+                        goalTip={goalTip}
+                        mainLabel={mainLabel}
+                        playText={playText}
+                        backText={backText}
+                        playClick={this.onPlayClick}
+                    />: ''
+                }
+                {this.state.gameMode ?
+                    <GameBlock className={SINGLE_PLAYER_GAME_FIELD}/>: ''
+                }
+                {this.state.resultsMode ?
+                    '': ''
+                }
             </div>
         );
     }
@@ -50,9 +73,15 @@ class SinglePlayer extends React.Component<IProps> {
     public componentWillUnmount() {
         const floorElements = document.getElementsByClassName('main-content__logo') as HTMLCollectionOf<HTMLElement>;
         floorElements[0].style.display = 'block';
+        document.body.style.cursor = 'default';
     }
 
-    private onBackClick() {
+    private onPlayClick() {
+        document.body.style.cursor = 'none';
+        this.setState({
+           preSingleMode: false,
+           gameMode: true,
+        });
     }
 }
 
