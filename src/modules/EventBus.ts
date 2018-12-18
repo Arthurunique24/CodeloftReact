@@ -11,8 +11,10 @@ class EventBus {
     }
 
     public off(event, callback) {
-        this.listeners[event] = this.listeners[event]
-            .filter((listener) => listener !== callback);
+        if (this.listeners[event]) {
+            this.listeners[event] = this.listeners[event]
+                .filter((listener) => listener !== callback);
+        }
     }
 
     public emit(event, data = {}) {

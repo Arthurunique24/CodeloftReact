@@ -87,7 +87,7 @@ class SinglePlayer extends React.Component<IProps, IState> {
     public componentWillUnmount() {
         const floorElements = document.getElementsByClassName('main-content__logo') as HTMLCollectionOf<HTMLElement>;
         floorElements[0].style.display = 'block';
-        document.body.style.cursor = 'default';
+        this.endGame();
     }
 
     private onPlayClick() {
@@ -123,7 +123,7 @@ class SinglePlayer extends React.Component<IProps, IState> {
 
     private endGame() {
         document.body.style.cursor = 'default';
-        this.scoreLabel[0].innerHTML = `${langService.getWord('gameResults.score')} ${this.gameHandler.getScore()}`;
+        // this.scoreLabel[0].innerHTML = `${langService.getWord('gameResults.score')} ${this.gameHandler.getScore()}`;
         // this.resultBlock.goalsLabel.innerHTML = `${langService.getWord('gameResults.goals')} ${this.gameHandler.getGoalsPassed()}`;
         eventBus.off('timerStop', this.resultsHandler);
         eventBus.off('timerTick', this.timerHandler);
