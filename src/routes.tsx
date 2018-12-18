@@ -8,6 +8,7 @@ import About from './containers/About/About';
 import Profile from './containers/Profile/Profile';
 import NotFound from './containers/NotFound/NotFound';
 import HighScore from './containers/HighScore/HighScore';
+import SinglePlayer from './containers/SinglePlayer/SinglePalyer';
 
 export const PATHS = {
   MENU: '/',
@@ -32,6 +33,7 @@ export const routes: JSX.Element = (
     <Route exact={ true } path={ PATHS.ABOUT } component={ About } />
     <Route exact={ true } path={ PATHS.ERROR } component={ NotFound } />
     <Route exact={ true } path={ PATHS.HIGH_SCORE } component={ HighScore } />
+    <Route exact={ true } path={ PATHS.SINGLE_PLAYER } component={ SinglePlayer } />
     <Route render={ () => <span>Тоже не найдено</span> } />
   </Switch>
 );
