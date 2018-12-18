@@ -2,6 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import PreSinglePlayer from '../../components/PreSinglePlayer/PreSinglePlayer';
 import GameInfo from '../../components/GameInfo/GameInfo';
+import GameResults from '../../components/GameResults/GameResults';
 import SinglePlayerHandler from '../../game/SinglePlayer/SinglePlayerHandler';
 import GameBlock from '../../components/GameBlock/GameBlock';
 import { ILangReducer } from '../../redux/lang/lang.reducer';
@@ -35,6 +36,8 @@ class SinglePlayer extends React.Component<IProps, IState> {
     private timerLabel: HTMLCollectionOf<HTMLElement>;
     private scoreLabel: HTMLCollectionOf<HTMLElement>;
     private goalsLabel: HTMLCollectionOf<HTMLElement>;
+    private resGoalsLabel: HTMLCollectionOf<HTMLElement>;
+    private resScoreLabel: HTMLCollectionOf<HTMLElement>;
     private readonly timerHandler: () => void;
     private readonly resultsHandler: () => void;
     private readonly scoreHandler: (value) => void;
@@ -79,11 +82,9 @@ class SinglePlayer extends React.Component<IProps, IState> {
                     />: ''
                 }
                 {!this.state.needRedirect? '': <Redirect to={PATHS.MENU}/>}
-                <GameBlock shown={this.state.gameMode} className={SINGLE_PLAYER_GAME_FIELD}/>: ''
-                <GameInfo shown={this.state.gameMode}/>: ''
-                {this.state.resultsMode ?
-                    '': ''
-                }
+                <GameBlock shown={this.state.gameMode} className={SINGLE_PLAYER_GAME_FIELD}/>
+                <GameInfo shown={this.state.gameMode}/>
+                <GameResults shown={this.state.resultsMode}/>
             </div>
         );
     }
@@ -139,7 +140,6 @@ class SinglePlayer extends React.Component<IProps, IState> {
         if (!this.scoreLabel) {
             this.scoreLabel = document.getElementsByClassName('game-stat__score-block') as HTMLCollectionOf<HTMLElement>;
         }
-        console.log(this.scoreLabel[0]);
         this.scoreLabel[0].innerText = `${langService.getWord('gameResults.score')} ${value}`;
     }
 
@@ -159,11 +159,18 @@ class SinglePlayer extends React.Component<IProps, IState> {
 
     private showResults() {
         this.setState({
-
+            resultsMode: true,
+            gameMode: false,
         });
-        // this.gameBlock.hide();
-        // this._resultBlock.show();
-        // this.endGame();
+        if (!this.resScoreLabel) {
+            this.resScoreLabel = document.getElementsByClassName('results-block__score') as HTMLCollectionOf<HTMLElement>;
+        }
+        if (!this.resGoalsLabel) {
+            this.resGoalsLabel = document.getElementsByClassName('results-block__goals') as HTMLCollectionOf<HTMLElement>;
+        }
+        this.resScoreLabel[0].innerHTML = `${langService.getWord('gameResults.score')} ${this.gameHandler.getScore()}`;
+        this.resGoalsLabel[0].innerHTML = `${langService.getWord('gameResults.goals')} ${this.gameHandler.getGoalsPassed()}`;
+        this.endGame();
     }
 }
 
