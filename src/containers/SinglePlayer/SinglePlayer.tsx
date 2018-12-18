@@ -52,6 +52,9 @@ class SinglePlayer extends React.Component<IProps, IState> {
         this.scoreHandler = this.redrawScore.bind(this);
         this.timerHandler = this.redrawTimer.bind(this);
         this.resultsHandler = this.showResults.bind(this);
+        eventBus.on('scoreRedraw', this.scoreHandler);
+        eventBus.on('timerTick', this.timerHandler);
+        eventBus.on('timerStop', this.resultsHandler);
     }
 
     public render(): JSX.Element {
@@ -106,6 +109,14 @@ class SinglePlayer extends React.Component<IProps, IState> {
            preSingleMode: false,
            gameMode: true,
         });
+        if (!this.timerLabel) {
+            this.timerLabel = document.getElementsByClassName('game-stat__timer-block') as HTMLCollectionOf<HTMLElement>;
+        }
+        if (!this.scoreLabel) {
+            this.scoreLabel = document.getElementsByClassName('game-stat__score-block') as HTMLCollectionOf<HTMLElement>;
+        }
+        this.scoreLabel[0].innerText = `${langService.getWord('gameResults.score')} 0`;
+        this.timerLabel[0].innerText = `${langService.getWord('game.time')} 30`;
         this.gameHandler = new SinglePlayerHandler([], SINGLE_PLAYER_GAME_FIELD);
         this.gameHandler.startGame();
     }
@@ -126,8 +137,9 @@ class SinglePlayer extends React.Component<IProps, IState> {
 
     private redrawScore(value) {
         if (!this.scoreLabel) {
-            this.scoreLabel = document.getElementsByClassName('game-stat__timer-block') as HTMLCollectionOf<HTMLElement>;
+            this.scoreLabel = document.getElementsByClassName('game-stat__score-block') as HTMLCollectionOf<HTMLElement>;
         }
+        console.log(this.scoreLabel[0]);
         this.scoreLabel[0].innerText = `${langService.getWord('gameResults.score')} ${value}`;
     }
 
@@ -146,6 +158,9 @@ class SinglePlayer extends React.Component<IProps, IState> {
     }
 
     private showResults() {
+        this.setState({
+
+        });
         // this.gameBlock.hide();
         // this._resultBlock.show();
         // this.endGame();

@@ -15,7 +15,7 @@ export default class GameInfo extends React.Component<IProps> {
         const {shown} = this.props;
 
         return (
-            <div className={'game-stat'}>
+            <div className='game-stat'>
                 <div className='game-stat__score-block'/>
                 <div className='game-stat__timer-block'/>
             </div>
