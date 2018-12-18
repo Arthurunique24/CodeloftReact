@@ -4,6 +4,7 @@ import './GameBlock.scss';
 
 interface IProps {
     className?: string;
+    shown: boolean;
 }
 
 export default class GameBlock extends React.Component<IProps> {
@@ -13,6 +14,7 @@ export default class GameBlock extends React.Component<IProps> {
 
     public render(): JSX.Element {
         const {className} = this.props;
+        const {shown} = this.props;
 
         return (
             <canvas className={`game-field ${className}`}/>

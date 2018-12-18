@@ -1,18 +1,18 @@
 import BaseGameHandler from '../BaseGameHandler';
 import eventBus from '../../modules/EventBus';
-import Timer from '../Timer/Timer.js';
+import Timer from '../Timer/Timer';
 
 const BASEROUNDTIME = 30;
 
 export default class SinglePlayerHandler extends BaseGameHandler {
-    private bonusMap: object;
     private gameTimer: Timer;
     private direction: string;
-    private goalSpawner: (index) => void;
-    private goalHandler: (details) => void;
-    private bonusHandler: (details) => void;
-    private bonusSpawner: () => void;
-    private ageHandler: () => void;
+    private readonly bonusMap: object;
+    private readonly goalSpawner: (index) => void;
+    private readonly goalHandler: (details) => void;
+    private readonly bonusHandler: (details) => void;
+    private readonly bonusSpawner: () => void;
+    private readonly ageHandler: () => void;
 
     constructor(players = [], arenaClassName) {
         super(players, arenaClassName);

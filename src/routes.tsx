@@ -8,7 +8,7 @@ import About from './containers/About/About';
 import Profile from './containers/Profile/Profile';
 import NotFound from './containers/NotFound/NotFound';
 import HighScore from './containers/HighScore/HighScore';
-import SinglePlayer from './containers/SinglePlayer/SinglePalyer';
+import SinglePlayer from './containers/SinglePlayer/SinglePlayer';
 
 export const PATHS = {
   MENU: '/',

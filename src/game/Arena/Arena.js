@@ -1,5 +1,5 @@
 import Goal from '../Goal/Goal.ts';
-import eventBus from '../../modules/EventBus/EventBus.js';
+import eventBus from '../../modules/EventBus';
 import Bonus from '../Bonus/Bonus.ts';
 
 const SCORE_RATE = 2;
@@ -291,12 +291,12 @@ export default class Arena {
 	loadTextures() {
 		return new Promise((resolve) => {
 			this._image = new Image();
-			this._image.src = '../../../static/Archive/camry/camry_yellow.png';
+			this._image.src = '../../statics/Archive/camry/camry_yellow.png';
 			this._image.onload = () => resolve();
 			this._goalImage = new Image();
-			this._goalImage.src = '../../../static/Archive/index.png';
+			this._goalImage.src = '../../statics/Archive/index.png';
 			this._bonusImage = new Image();
-			this._bonusImage.src = '../../../static/Archive/bonus.svg';
+			this._bonusImage.src = '../../statics/Archive/bonus.svg';
 		});
 	}
 
