@@ -17,7 +17,7 @@ export default class GameBlock extends React.Component<IProps> {
         const {shown} = this.props;
 
         return (
-            <canvas className={`game-field ${className}`}/>
+            <canvas className={`${className} ${shown? 'game-field': 'hidden'}`}/>
         );
     }
 }

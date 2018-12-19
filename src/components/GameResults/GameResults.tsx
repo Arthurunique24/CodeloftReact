@@ -15,7 +15,7 @@ export default class GameResults extends React.Component<IProps> {
         const {shown} = this.props;
 
         return (
-            <div className={`results-block ${shown? 'shown': 'hidden'}`}>
+            <div className={`${shown? 'results-block': 'hidden'}`}>
                 <div className='results-block__score'/>
                 <div className='results-block__goals'/>
                 <div className='results-block__buttons'>

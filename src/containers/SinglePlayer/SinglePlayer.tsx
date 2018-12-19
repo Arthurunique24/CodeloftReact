@@ -118,8 +118,11 @@ class SinglePlayer extends React.Component<IProps, IState> {
         }
         this.scoreLabel[0].innerText = `${langService.getWord('gameResults.score')} 0`;
         this.timerLabel[0].innerText = `${langService.getWord('game.time')} 30`;
-        this.gameHandler = new SinglePlayerHandler([], SINGLE_PLAYER_GAME_FIELD);
-        this.gameHandler.startGame();
+        setTimeout(() => {
+            this.gameHandler = new SinglePlayerHandler([], SINGLE_PLAYER_GAME_FIELD);
+            this.gameHandler.startGame();
+        }, 100);
+
     }
 
     private redrawTimer(value) {
@@ -145,6 +148,7 @@ class SinglePlayer extends React.Component<IProps, IState> {
 
     private quitWithEscape(event) {
         if (event.key === 'Escape' && event.type === 'keydown') {
+            this.endGame();
             this.setState({needRedirect: true});
         }
     }
@@ -158,6 +162,7 @@ class SinglePlayer extends React.Component<IProps, IState> {
     }
 
     private showResults() {
+        this.endGame();
         this.setState({
             resultsMode: true,
             gameMode: false,
@@ -170,7 +175,6 @@ class SinglePlayer extends React.Component<IProps, IState> {
         }
         this.resScoreLabel[0].innerHTML = `${langService.getWord('gameResults.score')} ${this.gameHandler.getScore()}`;
         this.resGoalsLabel[0].innerHTML = `${langService.getWord('gameResults.goals')} ${this.gameHandler.getGoalsPassed()}`;
-        this.endGame();
     }
 }
 

@@ -11,8 +11,8 @@ export default class Arena {
 		this._gameBlock = document.getElementsByClassName(arenaClassName)[0];
 		this._context = this._gameBlock.getContext('2d');
 		this._goalArray = [];
-		this.resizeGameField();
 		window.addEventListener('resize', this.resizeGameField.bind(this));
+		this.resizeGameField();
 		this.clearSingleField();
 	}
 
