@@ -57,6 +57,7 @@ class SinglePlayer extends React.Component<IProps, IState> {
         this.timerHandler = this.redrawTimer.bind(this);
         this.resultsHandler = this.showResults.bind(this);
         this.quit = this.quit.bind(this);
+        this.playAgain = this.playAgain.bind(this);
         eventBus.on('scoreRedraw', this.scoreHandler);
         eventBus.on('timerTick', this.timerHandler);
         eventBus.on('timerStop', this.resultsHandler);
@@ -93,7 +94,7 @@ class SinglePlayer extends React.Component<IProps, IState> {
                     backText={resBackText}
                     againText={playAgainText}
                     backClick={this.quit}
-                    playClick={this.onPlayClick}
+                    playClick={this.playAgain}
                 />
             </div>
         );
@@ -112,12 +113,34 @@ class SinglePlayer extends React.Component<IProps, IState> {
         if (this.gameHandler) {
             this.endGame();
         }
+        eventBus.off('timerStop', this.resultsHandler);
+        eventBus.off('timerTick', this.timerHandler);
+        eventBus.off('scoreRedraw', this.scoreHandler);
     }
 
     private onPlayClick() {
         document.body.style.cursor = 'none';
         this.setState({
             preSingleMode: false,
+            gameMode: true,
+        });
+        if (!this.timerLabel) {
+            this.timerLabel = document.getElementsByClassName('game-stat__timer-block') as HTMLCollectionOf<HTMLElement>;
+        }
+        if (!this.scoreLabel) {
+            this.scoreLabel = document.getElementsByClassName('game-stat__score-block') as HTMLCollectionOf<HTMLElement>;
+        }
+        this.scoreLabel[0].innerText = `${langService.getWord('gameResults.score')} 0`;
+        this.timerLabel[0].innerText = `${langService.getWord('game.time')} 30`;
+        setTimeout(() => {
+            this.gameHandler = new SinglePlayerHandler([], SINGLE_PLAYER_GAME_FIELD);
+            this.gameHandler.startGame();
+        }, 100);
+
+    }
+
+    private playAgain() {
+        this.setState({
             gameMode: true,
             resultsMode: false,
         });
@@ -133,7 +156,6 @@ class SinglePlayer extends React.Component<IProps, IState> {
             this.gameHandler = new SinglePlayerHandler([], SINGLE_PLAYER_GAME_FIELD);
             this.gameHandler.startGame();
         }, 100);
-
     }
 
     private redrawTimer(value) {
@@ -171,9 +193,6 @@ class SinglePlayer extends React.Component<IProps, IState> {
 
     private endGame() {
         document.body.style.cursor = 'default';
-        eventBus.off('timerStop', this.resultsHandler);
-        eventBus.off('timerTick', this.timerHandler);
-        eventBus.off('scoreRedraw', this.scoreHandler);
         this.gameHandler.stopGame();
     }
 
