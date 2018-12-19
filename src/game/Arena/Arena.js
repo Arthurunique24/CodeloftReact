@@ -319,6 +319,7 @@ export default class Arena {
 	}
 
 	drawPlayerHead(x, y, direction) {
+		console.log(direction);
 		this._context.beginPath();
 		this._context.save();
 		this._context.translate(x * this._scaleX, y * this._scaleY);

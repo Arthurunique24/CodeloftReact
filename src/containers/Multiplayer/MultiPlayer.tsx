@@ -51,6 +51,7 @@ class MultiPlayer extends React.Component<IProps, IState> {
         window.removeEventListener('keydown', this.quitWithEscape);
         const floorElements = document.getElementsByClassName('main-content__logo') as HTMLCollectionOf<HTMLElement>;
         floorElements[0].style.display = 'block';
+        this.gameHandler.stopGame();
     }
 
     private quitWithEscape(event) {

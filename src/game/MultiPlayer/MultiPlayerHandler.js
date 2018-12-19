@@ -52,7 +52,7 @@ export default class MultiPlayerHandler extends BaseGameHandler {
 	updateField(data) {
 		const diff = data.payload.diff;
 		this.prevPlayerHeads.forEach((player) => {
-			this.arena.clearPlayerHead(player.position.x, player.position.y, player.movedirection, player.color);
+			this.arena.clearPlayerHead(player.position.x, player.position.y, player.move_direction, player.color);
 		});
 		diff.forEach((pixel) => {
 			this.arena.drawPixel(pixel.pos.x, pixel.pos.y, pixel.color);
@@ -77,8 +77,8 @@ export default class MultiPlayerHandler extends BaseGameHandler {
 		});
 
 		data.payload.players.forEach((player) => {
-			if (!player.isdead) {
-				this.arena.drawPlayerHead(player.position.x, player.position.y, player.movedirection);
+			if (!player.is_dead) {
+				this.arena.drawPlayerHead(player.position.x, player.position.y, player.move_direction);
 			}
 		});
 		this.prevPlayerHeads = data.payload.players;
