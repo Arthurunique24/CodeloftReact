@@ -1,6 +1,7 @@
 import * as React from 'react';
 import b from '../../middleware/b';
 
+import Button from '../Button/Button';
 import './LanguageDrop.scss';
 
 interface IProps {
@@ -25,11 +26,11 @@ export default class LanguageDrop extends React.Component<IProps, IState> {
         const { className } = this.props;
 
         return (
-            <div className='dropdown'>
-                <button className='dropbtn'>Ru</button>
-                <div className='dropdown-content'>
-                    <a>Ru</a>
-                    <a>Eng</a>
+            <div className='dropUp'>
+                <a className='dropUp__button'>Ru</a>
+                <div className='dropUp__content'>
+                    <a className={ 'dropUp__content__links' }>Ru</a>
+                    <a className={ 'dropUp__content__links' }>Eng</a>
                 </div>
             </div>
         );

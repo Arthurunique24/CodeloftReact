@@ -28,7 +28,7 @@ export default class Footer extends React.Component<IProps, IState> {
         return (
             <div className={ 'footer' }>
                 <p className={ 'footer__logo' }>CodeLoft</p>
-                {/*<LanguageDrop/>*/}
+                <LanguageDrop/>
             </div>
         );
     }

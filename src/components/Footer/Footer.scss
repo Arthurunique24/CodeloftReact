@@ -4,12 +4,12 @@
   position: fixed;
   left: 0;
   bottom: 0;
-
   width: 100%;
   text-align: center;
 }
 
 .footer__logo {
+  display: inline-block;
   font-size: 2vmin;
   min-font-size: 50px;
   user-select: none;
