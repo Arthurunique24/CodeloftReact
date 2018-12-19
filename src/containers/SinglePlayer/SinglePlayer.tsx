@@ -22,6 +22,8 @@ interface IProps {
     mainLabel: string;
     playText: string;
     backText: string;
+    playAgainText: string;
+    resBackText: string;
 }
 
 interface IState {
@@ -35,7 +37,6 @@ class SinglePlayer extends React.Component<IProps, IState> {
     private gameHandler: SinglePlayerHandler;
     private timerLabel: HTMLCollectionOf<HTMLElement>;
     private scoreLabel: HTMLCollectionOf<HTMLElement>;
-    private goalsLabel: HTMLCollectionOf<HTMLElement>;
     private resGoalsLabel: HTMLCollectionOf<HTMLElement>;
     private resScoreLabel: HTMLCollectionOf<HTMLElement>;
     private readonly timerHandler: () => void;
@@ -55,6 +56,7 @@ class SinglePlayer extends React.Component<IProps, IState> {
         this.scoreHandler = this.redrawScore.bind(this);
         this.timerHandler = this.redrawTimer.bind(this);
         this.resultsHandler = this.showResults.bind(this);
+        this.quit = this.quit.bind(this);
         eventBus.on('scoreRedraw', this.scoreHandler);
         eventBus.on('timerTick', this.timerHandler);
         eventBus.on('timerStop', this.resultsHandler);
@@ -67,6 +69,8 @@ class SinglePlayer extends React.Component<IProps, IState> {
         const {mainLabel} = this.props;
         const {playText} = this.props;
         const {backText} = this.props;
+        const {resBackText} = this.props;
+        const {playAgainText} = this.props;
 
         return (
             <div className='singleplayer-block'>
@@ -79,12 +83,18 @@ class SinglePlayer extends React.Component<IProps, IState> {
                         playText={playText}
                         backText={backText}
                         playClick={this.onPlayClick}
-                    />: ''
+                    /> : ''
                 }
-                {!this.state.needRedirect? '': <Redirect to={PATHS.MENU}/>}
+                {!this.state.needRedirect ? '' : <Redirect to={PATHS.MENU}/>}
                 <GameBlock shown={this.state.gameMode} className={SINGLE_PLAYER_GAME_FIELD}/>
                 <GameInfo shown={this.state.gameMode}/>
-                <GameResults shown={this.state.resultsMode}/>
+                <GameResults
+                    shown={this.state.resultsMode}
+                    backText={resBackText}
+                    againText={playAgainText}
+                    backClick={this.quit}
+                    playClick={this.onPlayClick}
+                />
             </div>
         );
     }
@@ -107,8 +117,9 @@ class SinglePlayer extends React.Component<IProps, IState> {
     private onPlayClick() {
         document.body.style.cursor = 'none';
         this.setState({
-           preSingleMode: false,
-           gameMode: true,
+            preSingleMode: false,
+            gameMode: true,
+            resultsMode: false,
         });
         if (!this.timerLabel) {
             this.timerLabel = document.getElementsByClassName('game-stat__timer-block') as HTMLCollectionOf<HTMLElement>;
@@ -153,6 +164,11 @@ class SinglePlayer extends React.Component<IProps, IState> {
         }
     }
 
+    private quit() {
+        this.endGame();
+        this.setState({needRedirect: true});
+    }
+
     private endGame() {
         document.body.style.cursor = 'default';
         eventBus.off('timerStop', this.resultsHandler);
@@ -186,6 +202,8 @@ const mapStateToProps = (state: { lang: ILangReducer }) => {
         playText: state.lang.langObject['preSingle.play'][state.lang.lang],
         mainLabel: state.lang.langObject['preSingle.label'][state.lang.lang],
         backText: state.lang.langObject['buttonBack'][state.lang.lang],
+        playAgainText: state.lang.langObject['playAgain'][state.lang.lang],
+        resBackText: state.lang.langObject['goBack'][state.lang.lang],
     };
 };
 
