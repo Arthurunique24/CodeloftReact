@@ -2,6 +2,8 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
+import Header from '../../components/Header/Header';
+import Footer from '../../components/Footer/Footer';
 import Button from '../../components/Button/Button';
 import { ILangReducer } from '../../redux/lang/lang.reducer';
 import { Link } from 'react-router-dom';
@@ -43,6 +45,7 @@ class Main extends React.Component<IProps> {
 
         return (
             <MainWrapper>
+                <Header logo={ 'Tron 2D' }/>
                 <Button
                     link={<Link to={PATHS.SINGLE_PLAYER} className={'button'}>{singleText}</Link>}
                 />
@@ -71,7 +74,7 @@ class Main extends React.Component<IProps> {
                         link={<Link to={PATHS.PROFILE} className={'button'}>{profileText}</Link>}
                     />
                 ) : ''}
-
+                <Footer/>
             </MainWrapper>
         );
     }
