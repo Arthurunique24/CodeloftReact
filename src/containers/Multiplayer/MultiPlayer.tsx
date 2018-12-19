@@ -7,6 +7,7 @@ import { ILangReducer } from '../../redux/lang/lang.reducer';
 import MultiPlayerHandler from '../../game/MultiPlayer/MultiPlayerHandler.js';
 import { Redirect } from 'react-router';
 import { PATHS } from '../../routes';
+import ImagePopUp from '../../components/ImagePop/ImagePopUp';
 
 const MULTI_PLAYER_GAME_FIELD = 'multiplayer-block__game-field';
 
@@ -32,6 +33,8 @@ class MultiPlayer extends React.Component<IProps, IState> {
         return (
             <div className={'multiplayer-block'}>
                 {!this.state.needRedirect ? '' : <Redirect to={PATHS.MENU}/>}
+                <ImagePopUp src={'../../statics/imgs/control.jpg'}/>
+                <ImagePopUp top={true} src={'../../statics/imgs/escape.jpg'}/>
                 <GameBlock shown={true} className={MULTI_PLAYER_GAME_FIELD}/>
             </div>
         );
@@ -67,13 +70,11 @@ class MultiPlayer extends React.Component<IProps, IState> {
 }
 
 const mapStateToProps = (state: { lang: ILangReducer, signIn: ISignInReducer, validator: IValidatorReducer }) => {
-    return {
-    };
+    return {};
 };
 
 const mapDispatchToProps = dispatch => {
-    return {
-    };
+    return {};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MultiPlayer);

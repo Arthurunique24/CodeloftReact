@@ -12,6 +12,7 @@ import './SinglePlayer.scss';
 import eventBus from '../../modules/EventBus';
 import { Redirect } from 'react-router';
 import { PATHS } from '../../routes';
+import ImagePopUp from '../../components/ImagePop/ImagePopUp';
 
 const SINGLE_PLAYER_GAME_FIELD = 'singleplayer-block__game-field';
 
@@ -87,6 +88,8 @@ class SinglePlayer extends React.Component<IProps, IState> {
                     /> : ''
                 }
                 {!this.state.needRedirect ? '' : <Redirect to={PATHS.MENU}/>}
+                {this.state.gameMode? <ImagePopUp src={'../../statics/imgs/control.jpg'}/>: ''}
+                {this.state.gameMode? <ImagePopUp top={true} src={'../../statics/imgs/escape.jpg'}/>: ''}
                 <GameBlock shown={this.state.gameMode} className={SINGLE_PLAYER_GAME_FIELD}/>
                 <GameInfo shown={this.state.gameMode}/>
                 <GameResults

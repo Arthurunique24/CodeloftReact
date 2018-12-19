@@ -2,7 +2,7 @@ import BaseGameHandler from '../BaseGameHandler';
 import eventBus from '../../modules/EventBus';
 import Timer from '../Timer/Timer';
 
-const BASEROUNDTIME = 3;
+const BASEROUNDTIME = 30;
 
 export default class SinglePlayerHandler extends BaseGameHandler {
     private gameTimer: Timer;
