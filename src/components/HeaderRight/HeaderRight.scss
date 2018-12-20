@@ -7,8 +7,9 @@
 
 .header-right__links {
   cursor: pointer;
-  padding-left: 1vmin;
-  padding-right: 1vmin;
+  padding-left: 3vmin;
+  padding-right: 3vmin;
+  font-size: 3vh;
   color: $yellow-color;
   animation: neon-text-dark 13s steps(1, start) infinite reverse;
 }

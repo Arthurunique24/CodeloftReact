@@ -18,6 +18,7 @@ export interface ILangReducer {
 export function lang(state: ILangReducer = initialState, action: any) {
     switch (action.type) {
         case LangActionTypes.SET_LANG:
+            langService.changeLanguage(action.data);
             return {
                 ...state,
                 lang: action.data,

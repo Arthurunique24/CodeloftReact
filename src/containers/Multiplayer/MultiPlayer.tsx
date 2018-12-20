@@ -42,8 +42,6 @@ class MultiPlayer extends React.Component<IProps, IState> {
 
     public componentWillMount() {
         window.addEventListener('keydown', this.quitWithEscape);
-        const floorElements = document.getElementsByClassName('main-content__logo') as HTMLCollectionOf<HTMLElement>;
-        floorElements[0].style.display = 'none';
     }
 
     public componentDidMount() {
@@ -52,8 +50,6 @@ class MultiPlayer extends React.Component<IProps, IState> {
 
     public componentWillUnmount() {
         window.removeEventListener('keydown', this.quitWithEscape);
-        const floorElements = document.getElementsByClassName('main-content__logo') as HTMLCollectionOf<HTMLElement>;
-        floorElements[0].style.display = 'block';
         this.gameHandler.stopGame();
     }
 

@@ -58,7 +58,6 @@ class Profile extends React.Component<IProps, IState> {
                     <UserInfo
                         className={'profile-block__user-info'}
                         user={userService.getUserInfo('login')}
-                        email={userService.getUserInfo('email')}
                         score={userService.getUserInfo('score')}
                     />
                     <Button
