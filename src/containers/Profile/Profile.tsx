@@ -9,6 +9,8 @@ import '../../statics/scss/user-page.scss';
 import { ILangReducer } from '../../redux/lang/lang.reducer';
 import { PATHS } from '../../routes';
 import { Link, Redirect } from 'react-router-dom';
+import Header from '../../components/Header/Header';
+import Footer from '../../components/Footer/Footer';
 
 /* tslint:disable:variable-name */
 const ProfileWrapper = styled.div`
@@ -46,24 +48,28 @@ class Profile extends React.Component<IProps, IState> {
         if (canRender && !userService.isLogIn()) {
             return <Redirect to={PATHS.SIGN_IN}/>;
         }
-        return(
+        return (
             <ProfileWrapper>
-                {!canRender? <Redirect to={PATHS.MENU}/>: (
-                    <img src='../../statics/imgs/user-default.jpg' className={'profile-block__avatar'}/>
-                )}
-                <UserInfo
-                    className={'profile-block__user-info'}
-                    user={userService.getUserInfo('login')}
-                    email={userService.getUserInfo('email')}
-                    score={userService.getUserInfo('score')}
-                />
-                <Button
-                    text={logOutText}
-                    onClick={this.logOut}
-                />
-                <Button
-                    link={<Link to={PATHS.MENU} className={'button'}>{backText}</Link>}
-                />
+                <Header auth={false} logo={'Tron 2D'}/>
+                <div className='main-content'>
+                    {!canRender ? <Redirect to={PATHS.MENU}/> : (
+                        <img src='../../statics/imgs/user-default.jpg' className={'profile-block__avatar'}/>
+                    )}
+                    <UserInfo
+                        className={'profile-block__user-info'}
+                        user={userService.getUserInfo('login')}
+                        email={userService.getUserInfo('email')}
+                        score={userService.getUserInfo('score')}
+                    />
+                    <Button
+                        text={logOutText}
+                        onClick={this.logOut}
+                    />
+                    <Button
+                        link={<Link to={PATHS.MENU} className={'button'}>{backText}</Link>}
+                    />
+                </div>
+                <Footer/>
             </ProfileWrapper>
         );
     }

@@ -15,6 +15,8 @@ import { ChangeEvent } from 'react';
 import { setSignUpEmailError, setSignUpLoginError, setSignUpPasswordError, setSignUpRepeatError } from '../../redux/validator/validation.action';
 import { PATHS } from '../../routes';
 import { Link, Redirect } from 'react-router-dom';
+import Header from '../../components/Header/Header';
+import Footer from '../../components/Footer/Footer';
 
 /* tslint:disable:variable-name */
 const SignUpWrapper = styled.div`
@@ -102,48 +104,52 @@ class SignUp extends React.Component<IProps, IState> {
         }
         return (
             <SignUpWrapper>
-                {!this.state.needRedirect? (
-                    <form className={'sinUp-block__signUp-form'}>
-                        {hasLoginError ? <Label text={this.errors.loginError}/> : ''}
-                        <Input
-                            text={login}
-                            placeholder={loginPlaceholder}
-                            onChange={this.setLogin}
-                            className={'signUp-form__login-input'}
-                            onBlur={this.validateInput}
-                        />
-                        {hasEmailError ? <Label text={this.errors.emailError}/> : ''}
-                        <Input
-                            text={email}
-                            placeholder={emailPlaceholder}
-                            onChange={this.setEmail}
-                            className={'signUp-form__email-input'}
-                            onBlur={this.validateInput}
-                        />
-                        {hasPasswordError ? <Label text={this.errors.passwordError}/> : ''}
-                        <Input
-                            text={password}
-                            type={'password'}
-                            placeholder={passwordPlaceholder}
-                            onChange={this.setPassword}
-                            className={'signUp-form__password-input'}
-                            onBlur={this.validateInput}
-                        />
-                        {hasRepeatError ? <Label text={this.errors.repeatError}/> : ''}
-                        <Input
-                            text={repeat}
-                            type={'password'}
-                            placeholder={repeatPlaceholder}
-                            onChange={this.setRepeat}
-                            className={'signUp-form__repeat-input'}
-                            onBlur={this.validateInput}
-                        />
-                    </form>
-                ): <Redirect to={PATHS.MENU}/>}
-                <Button text={regText} onClick={this.onSubmit} main={true}/>
-                <Button
-                    link={<Link to={PATHS.MENU} className={'button'}>{backText}</Link>}
-                />
+                <Header auth={false} logo={'Tron 2D'}/>
+                <div className='main-content'>
+                    {!this.state.needRedirect ? (
+                        <form className={'sinUp-block__signUp-form'}>
+                            {hasLoginError ? <Label text={this.errors.loginError}/> : ''}
+                            <Input
+                                text={login}
+                                placeholder={loginPlaceholder}
+                                onChange={this.setLogin}
+                                className={'signUp-form__login-input'}
+                                onBlur={this.validateInput}
+                            />
+                            {hasEmailError ? <Label text={this.errors.emailError}/> : ''}
+                            <Input
+                                text={email}
+                                placeholder={emailPlaceholder}
+                                onChange={this.setEmail}
+                                className={'signUp-form__email-input'}
+                                onBlur={this.validateInput}
+                            />
+                            {hasPasswordError ? <Label text={this.errors.passwordError}/> : ''}
+                            <Input
+                                text={password}
+                                type={'password'}
+                                placeholder={passwordPlaceholder}
+                                onChange={this.setPassword}
+                                className={'signUp-form__password-input'}
+                                onBlur={this.validateInput}
+                            />
+                            {hasRepeatError ? <Label text={this.errors.repeatError}/> : ''}
+                            <Input
+                                text={repeat}
+                                type={'password'}
+                                placeholder={repeatPlaceholder}
+                                onChange={this.setRepeat}
+                                className={'signUp-form__repeat-input'}
+                                onBlur={this.validateInput}
+                            />
+                        </form>
+                    ) : <Redirect to={PATHS.MENU}/>}
+                    <Button text={regText} onClick={this.onSubmit} main={true}/>
+                    <Button
+                        link={<Link to={PATHS.MENU} className={'button'}>{backText}</Link>}
+                    />
+                </div>
+                <Footer/>
             </SignUpWrapper>
         );
     }

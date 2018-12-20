@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import '../Label/Lable.scss';
 
 interface IProps {
-  imgSrc: any;
+  imgSrc: string;
   imgClass: string;
 }
 

@@ -7,6 +7,8 @@ import { ILangReducer } from '../../redux/lang/lang.reducer';
 import { Link } from 'react-router-dom';
 import { PATHS } from '../../routes';
 import userService from '../../service/UserService/UserService';
+import Header from '../../components/Header/Header';
+import Footer from '../../components/Footer/Footer';
 
 /* tslint:disable:variable-name */
 const MainWrapper = styled.div`
@@ -35,42 +37,34 @@ class Main extends React.Component<IProps> {
     public render(): JSX.Element {
         const {singleText} = this.props;
         const {multiText} = this.props;
-        const {loginText} = this.props;
-        const {regText} = this.props;
         const {rulesText} = this.props;
         const {leadersText} = this.props;
         const {profileText} = this.props;
 
         return (
             <MainWrapper>
-                <Button
-                    link={<Link to={PATHS.SINGLE_PLAYER} className={'button'}>{singleText}</Link>}
-                />
-                {userService.isLogIn() ? (
+                <Header auth={false} logo={'Tron 2D'}/>
+                <div className='main-content'>
                     <Button
-                        link={<Link to={PATHS.MULTI_PLAYER} className={'button'}>{multiText}</Link>}
-                    />) : ''}
-                {!userService.isLogIn() ? (
-                    <Button
-                        link={<Link to={PATHS.SIGN_IN} className={'button'}>{loginText}</Link>}
+                        link={<Link to={PATHS.SINGLE_PLAYER} className={'button'}>{singleText}</Link>}
                     />
-                ) : ''}
-                {!userService.isLogIn() ? (
+                    {userService.isLogIn() ? (
+                        <Button
+                            link={<Link to={PATHS.MULTI_PLAYER} className={'button'}>{multiText}</Link>}
+                        />) : ''}
                     <Button
-                        link={<Link to={PATHS.SIGN_UP} className={'button'}>{regText}</Link>}
+                        link={<Link to={PATHS.ABOUT} className={'button'}>{rulesText}</Link>}
                     />
-                ) : ''}
-                <Button
-                    link={<Link to={PATHS.ABOUT} className={'button'}>{rulesText}</Link>}
-                />
-                <Button
-                    link={<Link to={PATHS.HIGH_SCORE} className={'button'}>{leadersText}</Link>}
-                />
-                {userService.isLogIn() ? (
                     <Button
-                        link={<Link to={PATHS.PROFILE} className={'button'}>{profileText}</Link>}
+                        link={<Link to={PATHS.HIGH_SCORE} className={'button'}>{leadersText}</Link>}
                     />
-                ) : ''}
+                    {userService.isLogIn() ? (
+                        <Button
+                            link={<Link to={PATHS.PROFILE} className={'button'}>{profileText}</Link>}
+                        />
+                    ) : ''}
+                </div>
+                <Footer/>
 
             </MainWrapper>
         );

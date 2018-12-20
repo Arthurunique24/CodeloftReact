@@ -10,6 +10,8 @@ import { ChangeEvent } from 'react';
 import Transport from '../../service/Transport/Transport';
 import { PATHS } from '../../routes';
 import { Link } from 'react-router-dom';
+import Header from '../../components/Header/Header';
+import Footer from '../../components/Footer/Footer';
 
 /* tslint:disable:variable-name */
 const HighScoreWrapper = styled.div`
@@ -32,6 +34,7 @@ interface IState {
 
 class HighScore extends React.Component<IProps, IState> {
     private copyState: IState;
+
     public constructor(props) {
         super(props);
         this.copyState = {
@@ -58,23 +61,27 @@ class HighScore extends React.Component<IProps, IState> {
 
         return (
             <HighScoreWrapper>
-                <ScoreTable users={this.state.users}/>
-                <div className={'leaders-block__pagination-block'}>
-                    <a onClick={this.pageBack}>{paginateBack}</a>
-                    {this.state.pagesArray.map((i) => <a
-                        key={i}
-                        className={this.state.currentActive === i? 'active': ''}
-                        onClick={() => {
-                            this.copyState.currentActive = i;
-                            this.paginate();
-                        }}
-                    >{i}
-                    </a>)}
-                    <a onClick={this.pageForward}>{paginateForward}</a>
+                <Header auth={false} logo={'Tron 2D'}/>
+                <div className='main-content'>
+                    <ScoreTable users={this.state.users}/>
+                    <div className={'leaders-block__pagination-block'}>
+                        <a onClick={this.pageBack}>{paginateBack}</a>
+                        {this.state.pagesArray.map((i) => <a
+                            key={i}
+                            className={this.state.currentActive === i ? 'active' : ''}
+                            onClick={() => {
+                                this.copyState.currentActive = i;
+                                this.paginate();
+                            }}
+                        >{i}
+                        </a>)}
+                        <a onClick={this.pageForward}>{paginateForward}</a>
+                    </div>
+                    <Button
+                        link={<Link to={PATHS.MENU} className={'button'}>{backText}</Link>}
+                    />
                 </div>
-                <Button
-                    link={<Link to={PATHS.MENU} className={'button'}>{backText}</Link>}
-                />
+                <Footer/>
             </HighScoreWrapper>
         );
     }
@@ -138,8 +145,7 @@ const mapStateToProps = (state: { lang: ILangReducer }) => {
 };
 
 const mapDispatchToProps = dispatch => {
-    return {
-    };
+    return {};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HighScore);
