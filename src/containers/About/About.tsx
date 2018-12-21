@@ -49,10 +49,6 @@ class About extends React.Component<IProps> {
             </MainWrapper>
         );
     }
-
-    private goBack() {
-        history.pushState({url: PATHS.MENU}, '', PATHS.MENU);
-    }
 }
 
 const mapStateToProps = (state: { lang: ILangReducer }) => {

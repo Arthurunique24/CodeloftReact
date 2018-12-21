@@ -9,10 +9,13 @@ import { routes } from './routes';
 
 import App from './containers/App/App';
 import userService from './service/UserService/UserService';
+import serviceWorkerRegister from './modules/RegisterWorker';
 
 import './statics/scss/main.scss';
 
 const store = configureStore();
+
+serviceWorkerRegister();
 
 userService.checkAuth().then(() => {
     ReactDOM.render(
