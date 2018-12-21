@@ -10,6 +10,8 @@ import { Link } from 'react-router-dom';
 import Footer from '../../components/Footer/Footer';
 import Header from '../../components/Header/Header';
 
+import './About.scss';
+
 /* tslint:disable:variable-name */
 const MainWrapper = styled.div`
   // some styles
@@ -36,6 +38,7 @@ class About extends React.Component<IProps> {
                 <Header auth={false} logo={'Tron 2D'}/>
                 <div className='main-content'>
                     <Label
+                        className={'about-block__rules-text'}
                         text={text}
                     />
                     <Button
