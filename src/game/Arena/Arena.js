@@ -296,7 +296,7 @@ export default class Arena {
 			this._goalImage = new Image();
 			this._goalImage.src = '../../statics/Archive/index.png';
 			this._bonusImage = new Image();
-			this._bonusImage.src = '../../statics/Archive/bonus.svg';
+			this._bonusImage.src = '../../statics/imgs/bonus.png';
 		});
 	}
 

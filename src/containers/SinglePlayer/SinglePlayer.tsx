@@ -192,7 +192,9 @@ class SinglePlayer extends React.Component<IProps, IState> {
 
     private endGame() {
         document.body.style.cursor = 'default';
-        this.gameHandler.stopGame();
+        if (this.gameHandler) {
+            this.gameHandler.stopGame();
+        }
     }
 
     private showResults() {
