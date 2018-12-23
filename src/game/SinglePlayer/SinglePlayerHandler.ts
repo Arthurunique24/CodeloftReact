@@ -23,7 +23,7 @@ export default class SinglePlayerHandler extends BaseGameHandler {
                 eventBus.emit('scoreRedraw', player.getScore());
             },
             2: () => {
-                this.gameTimer.addDuration(10);
+                this.gameTimer.addDuration(5);
                 eventBus.emit('timerTick', this.gameTimer.getTimeLeft());
             },
         };
@@ -63,6 +63,22 @@ export default class SinglePlayerHandler extends BaseGameHandler {
         const action = this.keyCodeMap[event.keyCode];
         if (action) {
             this.direction = action;
+            this.protagonist.setDirection(this.direction);
+        }
+    }
+
+    public tapControl(event) {
+        if (event.clientX < this.arena._xMax / 2 && this.direction === 'UP' || this.direction === 'DOWN') {
+            this.direction = 'LEFT';
+            this.protagonist.setDirection(this.direction);
+        } else if (event.clientX > this.arena._xMax / 2 && this.direction === 'UP' || this.direction === 'DOWN') {
+            this.direction = 'RIGHT';
+            this.protagonist.setDirection(this.direction);
+        } else if (event.clientY < this.arena._yMax / 2 && this.direction === 'RIGHT' || this.direction === 'LEFT') {
+            this.direction = 'UP';
+            this.protagonist.setDirection(this.direction);
+        } else if (event.clientY > this.arena._yMax / 2 && this.direction === 'RIGHT' || this.direction === 'LEFT') {
+            this.direction = 'DOWN';
             this.protagonist.setDirection(this.direction);
         }
     }

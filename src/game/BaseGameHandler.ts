@@ -10,6 +10,7 @@ export default class BaseGameHandler {
     protected gameLoops: any[];
     /* tslint:enable:no-any */
     private readonly keyHandler: () => void;
+    private readonly tapHandler: () => void;
 
     constructor(players, arenaClassName) {
         this.keyCodeMap = {
@@ -35,7 +36,12 @@ export default class BaseGameHandler {
             this.players.push(this.protagonist);
         }
         this.keyHandler = this.keyControl.bind(this);
+        this.tapHandler = this.tapControl.bind(this);
         this.gameLoops = [];
+    }
+
+    public tapControl(event) {
+
     }
 
     public keyControl(event) {
@@ -49,12 +55,14 @@ export default class BaseGameHandler {
     public startGame() {
         window.addEventListener('keydown', this.keyHandler);
         window.addEventListener('keypress', this.keyHandler);
+        window.addEventListener('click', this.tapControl.bind(this));
         this.gameLoops.push(setInterval(this.gameLoop.bind(this), 10));
     }
 
     public stopGame() {
         window.removeEventListener('keydown', this.keyHandler);
         window.removeEventListener('keypress', this.keyHandler);
+        window.removeEventListener('click', this.tapControl.bind(this));
         this.gameLoops.forEach((loop) => clearInterval(loop));
     }
 }

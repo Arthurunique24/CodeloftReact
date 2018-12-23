@@ -27,12 +27,12 @@ class HeaderRight extends React.Component<IProps, IState> {
     public render(): JSX.Element {
         const { loginText } = this.props;
         const { regText } = this.props;
-        const { auth } = this.props;
+        const auth  = userService.isLogIn();
 
         return (
             <div className='header-right'>
                 {auth ?
-                    (<a className={ 'header-right__links' } href={ PATHS.PROFILE }>{ userService.getUserInfo('login') }</a>)
+                    (<a className={ 'header-right__links' } href={ PATHS.PROFILE }>[ { userService.getUserInfo('login') } ]</a>)
                     :
                     (<div>
                         <a className={ 'header-right__links' } href={PATHS.SIGN_IN}>{ loginText }</a>

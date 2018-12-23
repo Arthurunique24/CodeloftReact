@@ -82,6 +82,12 @@ class UserService {
         return this.handleAuthResponse(Transport.Post('/user', requestBody));
     }
 
+    public updateScore(score: string) {
+        if (+score > this.userInfo.score) {
+            Transport.Post('/user/updateScore', {score});
+        }
+    }
+
     private handleAuthResponse(fetch: Promise<object>) {
         return fetch
             .then((response: Response) => {

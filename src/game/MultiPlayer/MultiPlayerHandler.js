@@ -49,6 +49,22 @@ export default class MultiPlayerHandler extends BaseGameHandler {
 		this.gameSocket.sendDirection(action);
 	}
 
+	tapControl(event) {
+		if (event.clientX < 200 && event.clientY > 200 && event.clientY < 1000) {
+			const action = 'LEFT';
+			this.gameSocket.sendDirection(action);
+		} else if (event.clientX > this.arena._xMax / 2 && event.clientY > 200 && event.clientY < 1000) {
+			const action = 'RIGHT';
+			this.gameSocket.sendDirection(action);
+		} else if (event.clientY < 200 && event.clientX > 200 && event.clientX < 1000) {
+			const action = 'UP';
+			this.gameSocket.sendDirection(action);
+		} else if (event.clientY > 800 && event.clientX > 200 && event.clientX < 1000) {
+			const action = 'DOWN';
+			this.gameSocket.sendDirection(action);
+		}
+	}
+
 	updateField(data) {
 		const diff = data.payload.diff;
 		this.prevPlayerHeads.forEach((player) => {

@@ -19,10 +19,10 @@ export default class Arena {
 	resizeGameField() {
 		this._gameBlock.width = window.innerWidth;
 		this._gameBlock.height = window.innerHeight;
-		this._xMin = this._gameBlock.getBoundingClientRect().x + 5;
-		this._yMin = this._gameBlock.getBoundingClientRect().y + 5;
-		this._xMax = this._gameBlock.getBoundingClientRect().width - this._xMin - 5;
-		this._yMax = this._gameBlock.getBoundingClientRect().height - this._yMin - 5;
+		this._xMin = this._gameBlock.getBoundingClientRect().x;
+		this._yMin = this._gameBlock.getBoundingClientRect().y;
+		this._xMax = this._gameBlock.getBoundingClientRect().width - this._xMin;
+		this._yMax = this._gameBlock.getBoundingClientRect().height - this._yMin;
 		this._diagonal = Math.sqrt((this._xMax - this._xMin) * (this._xMax - this._xMin)
 			+ (this._yMax - this._yMin) * (this._yMax - this._yMin));
 		eventBus.emit('gameFieldResized');
@@ -58,14 +58,14 @@ export default class Arena {
 	clearSingleField() {
 		this._context.beginPath();
 		this._context.fillStyle = '#0C141F';
-		this._context.fillRect(this._xMin, this._yMin, this._xMax, this._yMax);
+		this._context.clearRect(this._xMin, this._yMin, this._xMax, this._yMax);
 		this._context.closePath();
 	}
 
 	clearMultiField() {
 		this._context.beginPath();
 		this._context.fillStyle = '#0C141F';
-		this._context.fillRect(0, 0, window.innerHeight, window.innerWidth);
+		this._context.clearRect(0, 0, window.innerHeight, window.innerWidth);
 		this._context.closePath();
 	}
 
@@ -84,7 +84,7 @@ export default class Arena {
 			}
 			// this._context.arc(player.getX(), player.getY(), player.getRadius() + 2, 0, 2 * Math.PI);
 			this._context.fillStyle = '#0C141F';
-			this._context.fillRect(-22, -42, 42, 82);
+			this._context.clearRect(-22, -42, 42, 82);
 			this._context.fill();
 			this._context.restore();
 			this._context.closePath();
@@ -312,7 +312,7 @@ export default class Arena {
 			this._context.rotate(Math.PI);
 		}
 		this._context.fillStyle = '#0c141F';
-		this._context.fillRect(-17, -32, 34, 64);
+		this._context.clearRect(-17, -32, 34, 64);
 		this._context.restore();
 		this._context.closePath();
 		this.drawPixel(x, y, color);
@@ -347,6 +347,8 @@ export default class Arena {
 			height += 4;
 			beginX -= 2;
 			beginY -= 2;
+			this._context.clearRect(beginX, beginY, width, height);
+			return;
 		}
 		this._context.beginPath();
 		this._context.fillStyle = _color;

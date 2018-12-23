@@ -6,7 +6,6 @@ const URLS = [
     '/about',
     '/score',
     '/singleplayer',
-    '/api/user?page=1&page_size=5',
 ];
 
 this.addEventListener('install', (event) => {

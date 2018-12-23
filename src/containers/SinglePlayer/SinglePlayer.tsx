@@ -13,6 +13,7 @@ import eventBus from '../../modules/EventBus';
 import { Redirect } from 'react-router';
 import { PATHS } from '../../routes';
 import ImagePopUp from '../../components/ImagePop/ImagePopUp';
+import userService from '../../service/UserService/UserService';
 
 const SINGLE_PLAYER_GAME_FIELD = 'singleplayer-block__game-field';
 
@@ -75,7 +76,7 @@ class SinglePlayer extends React.Component<IProps, IState> {
         const {playAgainText} = this.props;
 
         return (
-            <div className='singleplayer-block'>
+            <div className='singleplayer-block with-border'>
                 {this.state.preSingleMode ?
                     <PreSinglePlayer
                         scoreTip={scoreTip}
@@ -118,7 +119,7 @@ class SinglePlayer extends React.Component<IProps, IState> {
     }
 
     private onPlayClick() {
-        document.body.style.cursor = 'none';
+        // document.body.style.cursor = 'none';
         this.setState({
             preSingleMode: false,
             gameMode: true,
@@ -211,6 +212,7 @@ class SinglePlayer extends React.Component<IProps, IState> {
         }
         this.resScoreLabel[0].innerHTML = `${langService.getWord('gameResults.score')} ${this.gameHandler.getScore()}`;
         this.resGoalsLabel[0].innerHTML = `${langService.getWord('gameResults.goals')} ${this.gameHandler.getGoalsPassed()}`;
+        userService.updateScore(this.gameHandler.getScore().toString());
     }
 }
 

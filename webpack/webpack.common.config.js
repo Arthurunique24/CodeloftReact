@@ -133,17 +133,14 @@ module.exports = {
 			from: 'statics/imgs',
 			to: 'statics/imgs'
 		}, {
-			from: 'statics/fonts',
-			to: 'statics/fonts'
-		}, {
 			from: 'statics/Archive',
 			to: 'statics/Archive'
 		}, {
 			from: './cache.json',
-			to: './cache.json'
+			to: 'cache.json'
 		}, {
 			from: './worker.js',
-			to: './worker.js'
+			to: 'worker.js'
 		}])
 	],
 	node: {

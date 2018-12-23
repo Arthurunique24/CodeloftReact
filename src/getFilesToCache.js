@@ -14,4 +14,4 @@ const getFiles = (dir, filesList) => {
     return filesList;
 };
 
-fs.writeFileSync(`${__dirname}/cache.json`, JSON.stringify(getFiles(`${__dirname}/static`)));
+fs.writeFileSync(`${__dirname}/cache.json`, JSON.stringify(getFiles(`${__dirname}/statics`)));
