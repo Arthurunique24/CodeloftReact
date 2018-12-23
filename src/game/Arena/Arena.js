@@ -56,57 +56,64 @@ export default class Arena {
 	}
 
 	clearSingleField() {
-		this._context.beginPath();
-		this._context.fillStyle = '#0C141F';
-		this._context.clearRect(this._xMin, this._yMin, this._xMax, this._yMax);
-		this._context.closePath();
+		requestAnimationFrame(() => {
+			this._context.beginPath();
+			this._context.fillStyle = '#0C141F';
+			this._context.clearRect(this._xMin, this._yMin, this._xMax, this._yMax);
+			this._context.closePath();
+		});
 	}
 
 	clearMultiField() {
-		this._context.beginPath();
-		this._context.fillStyle = '#0C141F';
-		this._context.clearRect(0, 0, window.innerHeight, window.innerWidth);
-		this._context.closePath();
+		requestAnimationFrame(() => {
+			this._context.beginPath();
+			this._context.fillStyle = '#0C141F';
+			this._context.clearRect(0, 0, window.innerHeight, window.innerWidth);
+			this._context.closePath();
+		});
 	}
 
 	clearPlayer(player, direction) {
 		if (player) {
-			// this._context.globalCompositeOperation = 'destination-out';
-			this._context.beginPath();
-			this._context.save();
-			this._context.translate(player.getX(), player.getY());
-			if (direction === 'RIGHT') {
-				this._context.rotate(Math.PI / 2);
-			} else if (direction === 'LEFT') {
-				this._context.rotate(3 * Math.PI / 2);
-			} else if (direction === 'DOWN') {
-				this._context.rotate(Math.PI);
-			}
-			// this._context.arc(player.getX(), player.getY(), player.getRadius() + 2, 0, 2 * Math.PI);
-			this._context.fillStyle = '#0C141F';
-			this._context.clearRect(-22, -42, 42, 82);
-			this._context.fill();
-			this._context.restore();
-			this._context.closePath();
+			requestAnimationFrame(() => {
+				this._context.beginPath();
+				this._context.save();
+				this._context.translate(player.getX(), player.getY());
+				if (direction === 'RIGHT') {
+					this._context.rotate(Math.PI / 2);
+				} else if (direction === 'LEFT') {
+					this._context.rotate(3 * Math.PI / 2);
+				} else if (direction === 'DOWN') {
+					this._context.rotate(Math.PI);
+				}
+				// this._context.arc(player.getX(), player.getY(), player.getRadius() + 2, 0, 2 * Math.PI);
+				this._context.fillStyle = '#0C141F';
+				this._context.clearRect(-22, -42, 42, 82);
+				this._context.fill();
+				this._context.restore();
+				this._context.closePath();
+			});
 		}
 	}
 
 	drawPlayer(player, direction) {
 		if (player) {
-			this._context.globalCompositeOperation = 'source-over';
-			this._context.beginPath();
-			this._context.save();
-			this._context.translate(player.getX(), player.getY());
-			if (direction === 'RIGHT') {
-				this._context.rotate(Math.PI / 2);
-			} else if (direction === 'LEFT') {
-				this._context.rotate(3 * Math.PI / 2);
-			} else if (direction === 'DOWN') {
-				this._context.rotate(Math.PI);
-			}
-			this._context.drawImage(this._image, -20, -40, 40, 80);
-			this._context.restore();
-			this._context.closePath();
+			requestAnimationFrame(() => {
+				this._context.globalCompositeOperation = 'source-over';
+				this._context.beginPath();
+				this._context.save();
+				this._context.translate(player.getX(), player.getY());
+				if (direction === 'RIGHT') {
+					this._context.rotate(Math.PI / 2);
+				} else if (direction === 'LEFT') {
+					this._context.rotate(3 * Math.PI / 2);
+				} else if (direction === 'DOWN') {
+					this._context.rotate(Math.PI);
+				}
+				this._context.drawImage(this._image, -20, -40, 40, 80);
+				this._context.restore();
+				this._context.closePath();
+			});
 		}
 	}
 
@@ -192,59 +199,55 @@ export default class Arena {
 				eventBus.emit('spawnGoals', index);
 			}
 		});
+		requestAnimationFrame(() => {
+			this._goalArray.forEach((goal) => {
+				this._context.globalCompositeOperation = 'source-over';
+				this._context.beginPath();
+				this._context.fillStyle = '#FFE64D';
+				this._context.fill();
+				this._context.closePath();
+				this._context.beginPath();
+				this._context.moveTo(goal.getCoords().x1, goal.getCoords().y1);
+				this._context.lineTo(goal.getCoords().x2, goal.getCoords().y2);
+				this._context.strokeStyle = '#FFE64D';
+				this._context.lineWidth = 5;
+				this._context.stroke();
+				this._context.closePath();
+				this._context.drawImage(this._goalImage, goal.getCoords().x1 - 10, goal.getCoords().y1 - 10);
+				this._context.drawImage(this._goalImage, goal.getCoords().x2 - 10, goal.getCoords().y2 - 10);
 
-		this._goalArray.forEach((goal) => {
-			this._context.globalCompositeOperation = 'source-over';
-			this._context.beginPath();
-			// this._context.arc(goal.getCoords().x1, goal.getCoords().y1,
-			// 	12, 0, 2 * Math.PI);
-			// this._context.arc(goal.getCoords().x2, goal.getCoords().y2,
-			// 	12, 0, 2 * Math.PI);
-			this._context.fillStyle = '#FFE64D';
-			this._context.fill();
-			this._context.closePath();
-
-			// setInterval(this.goalAnimate, 50);
-
-			this._context.beginPath();
-			this._context.moveTo(goal.getCoords().x1, goal.getCoords().y1);
-			this._context.lineTo(goal.getCoords().x2, goal.getCoords().y2);
-			this._context.strokeStyle = '#FFE64D';
-			this._context.lineWidth = 5;
-			this._context.stroke();
-			this._context.closePath();
-			this._context.drawImage(this._goalImage, goal.getCoords().x1 - 10, goal.getCoords().y1 - 10);
-			this._context.drawImage(this._goalImage, goal.getCoords().x2 - 10, goal.getCoords().y2 - 10);
-
-			this._context.fillStyle = '#3EC8AC';
-			this._context.font = '4vmin serif';
-			this._context.fillText(`${10 - goal.getAge()}`,
-				Math.max(goal.getCoords().x1, goal.getCoords().x2) + goal.getRadius() + this._diagonal / 150,
-				Math.max(goal.getCoords().y1, goal.getCoords().y2) + goal.getRadius() + this._diagonal / 150);
+				this._context.fillStyle = '#3EC8AC';
+				this._context.font = '4vmin serif';
+				this._context.fillText(`${10 - goal.getAge()}`,
+					Math.max(goal.getCoords().x1, goal.getCoords().x2) + goal.getRadius() + this._diagonal / 150,
+					Math.max(goal.getCoords().y1, goal.getCoords().y2) + goal.getRadius() + this._diagonal / 150);
+			});
 		});
 	}
 
 	clearGoal(index) {
 		const i = index === 1 ? 0 : 1;
 		const goal = this._goalArray[i];
-		this._context.globalCompositeOperation = 'destination-out';
-		this._context.beginPath();
-		this._context.arc(goal.getCoords().x1, goal.getCoords().y1,
-			14, 0, 2 * Math.PI);
-		this._context.arc(goal.getCoords().x2, goal.getCoords().y2,
-			14, 0, 2 * Math.PI);
-		this._context.fillStyle = '#0C141F';
-		this._context.fill();
-		this._context.closePath();
+		requestAnimationFrame(() => {
+			this._context.globalCompositeOperation = 'destination-out';
+			this._context.beginPath();
+			this._context.arc(goal.getCoords().x1, goal.getCoords().y1,
+				14, 0, 2 * Math.PI);
+			this._context.arc(goal.getCoords().x2, goal.getCoords().y2,
+				14, 0, 2 * Math.PI);
+			this._context.fillStyle = '#0C141F';
+			this._context.fill();
+			this._context.closePath();
 
-		this._context.beginPath();
-		this._context.moveTo(goal.getCoords().x1, goal.getCoords().y1);
-		this._context.lineTo(goal.getCoords().x2, goal.getCoords().y2);
-		this._context.strokeStyle = '#FFE64D';
-		this._context.lineWidth = 7;
-		this._context.stroke();
-		this._context.closePath();
+			this._context.beginPath();
+			this._context.moveTo(goal.getCoords().x1, goal.getCoords().y1);
+			this._context.lineTo(goal.getCoords().x2, goal.getCoords().y2);
+			this._context.strokeStyle = '#FFE64D';
+			this._context.lineWidth = 7;
+			this._context.stroke();
+			this._context.closePath();
 
+		});
 		this._goalArray = this._goalArray.slice(i, i + 1);
 	}
 
@@ -277,14 +280,11 @@ export default class Arena {
 
 	drawBonus() {
 		if (this._currentBonus) {
-			// this._context.globalCompositeOperation = 'source-over';
-			this._context.beginPath();
-			// this._context.arc(this._currentBonus.getX(), this._currentBonus.getY(),
-			// 	10 + 2, 0, 2 * Math.PI);
-			// this._context.fillStyle = '#FFE64D';
-			// this._context.fill();
-			this._context.drawImage(this._bonusImage, this._currentBonus.getX() - 40, this._currentBonus.getY() - 40, 80, 80);
-			this._context.closePath();
+			requestAnimationFrame(() => {
+				this._context.beginPath();
+				this._context.drawImage(this._bonusImage, this._currentBonus.getX() - 40, this._currentBonus.getY() - 40, 80, 80);
+				this._context.closePath();
+			});
 		}
 	}
 
@@ -360,14 +360,6 @@ export default class Arena {
 		this._context.beginPath();
 		this._context.arc(x * this._scaleX, y * this._scaleY, 7, 0, 2 * Math.PI);
 		this._context.fillStyle = '#0C141F';
-		this._context.fill();
-		this._context.closePath();
-	}
-
-	goalAnimate(x, y) {
-		this._context.beginPath();
-		this._context.arc(x, y, 10, 0, 2 * Math.PI);
-		this._context.fillStyle = '#FFE64D';
 		this._context.fill();
 		this._context.closePath();
 	}
