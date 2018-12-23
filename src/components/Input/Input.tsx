@@ -1,61 +1,52 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
-
 import { ICommonReducer } from '../../redux/common/common.reducer';
-import { setInputData } from '../../redux/common/common.action';
 
-/* tslint:disable:variable-name */
-const InputWrapper = styled.div`
-  width: 400px;
-  height: 100px;
-  color: #000000;
-`;
-/* tslint:enable:variable-name */
+import { ChangeEvent } from 'react';
+import './Input.scss';
 
 interface IProps {
-  text?: string;
-  setInputData?: (value: string) => void;
+    text?: string;
+    placeholder?: string;
+    type?: string;
+    setInputData?: (value: string) => void;
+    onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+    onBlur?: (event: ChangeEvent<HTMLInputElement>) => void;
+    className?: string;
 }
 
-interface IState {
+class Input extends React.Component<IProps> {
+    public constructor(props: IProps) {
+        super(props);
+    }
 
-}
+    public render(): JSX.Element {
+        const {text} = this.props;
+        const {placeholder} = this.props;
+        const {type} = this.props;
+        const {onChange} = this.props;
+        const {onBlur} = this.props;
+        const {className} = this.props;
 
-class Input extends React.Component<IProps, IState> {
-  public constructor(props: IProps) {
-    super(props);
-    
-    this.onChange = this.onChange.bind(this);
-  }
-  
-  public render(): JSX.Element {
-    const {text} = this.props;
-    
-    return (
-      <InputWrapper>
-        <input value={ text } onChange={ this.onChange } />
-      </InputWrapper>
-    );
-  }
-  
-  private onChange(event) {
-    this.props.setInputData(event.target.value);
-  }
+        return (
+            <input
+                className={className ? `input ${className}` : 'input'}
+                type={type}
+                value={text}
+                placeholder={placeholder}
+                onChange={onChange}
+                onBlur={onBlur}
+            />
+        );
+    }
 }
 
 const mapStateToProps = (state: { common: ICommonReducer; }) => {
-  return {
-    text: state.common.inputData.value,
-  };
+    return {};
 };
 
-const mapDispatchToProps =dispatch => {
-  return {
-    setInputData(value: string) {
-      dispatch(setInputData(value));
-    },
-  };
+const mapDispatchToProps = dispatch => {
+    return {};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Input);
