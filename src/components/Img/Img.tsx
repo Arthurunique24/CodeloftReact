@@ -20,8 +20,8 @@ export default class Label extends React.Component<IProps, IState> {
   }
 
   public render(): JSX.Element {
-    const {imgSrc} = this.props;
-    const {imgClass} = this.props;
+    const { imgSrc } = this.props;
+    const { className } = this.props;
 
     return (
         <img className={ imgClass } src={ imgSrc }/>

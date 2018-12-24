@@ -2,6 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
+import Header from '../../components/Header/Header';
 import Button from '../../components/Button/Button';
 import { ILangReducer } from '../../redux/lang/lang.reducer';
 import { Link } from 'react-router-dom';
@@ -65,7 +66,6 @@ class Main extends React.Component<IProps> {
                     ) : ''}
                 </div>
                 <Footer/>
-
             </MainWrapper>
         );
     }
