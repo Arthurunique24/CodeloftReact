@@ -1,50 +1,58 @@
 import * as React from 'react';
-import b from '../../middleware/b';
 
 import './HeaderRight.scss';
-import Img from '../Img/Img';
+import { PATHS } from '../../routes';
+import { connect } from 'react-redux';
+import { ILangReducer } from '../../redux/lang/lang.reducer';
+import userService from '../../service/UserService/UserService';
 
 interface IProps {
-  auth?: boolean;
-  className?: string;
-  onClick?: (event) => void;
+    auth?: boolean;
+    loginText?: boolean;
+    regText?: boolean;
 }
 
 interface IState {
 }
 
-export default class HeaderRight extends React.Component<IProps, IState> {
-  public static defaultProps: Partial<IProps> = {
-    auth: false,
-    className: '',
-  };
+class HeaderRight extends React.Component<IProps, IState> {
+    public static defaultProps: Partial<IProps> = {
+        auth: userService.isLogIn(),
+    };
 
-  public constructor(props: IProps) {
-    super(props);
-    this.onCLick = this.onCLick.bind(this);
-  }
-
-  public render(): JSX.Element {
-    // const { text } = this.props;
-    const { className } = this.props;
-    const { auth } = this.props;
-
-    return (
-        <div className="header-right">
-          {auth ?
-              (<a className={ 'header-right__links' } href="#">UserName</a>)
-              :
-              (<div><a className={ 'header-right__links' }>Sign In</a> <a className={ 'header-right__links' }>Sign Up</a></div>)
-          }
-        </div>
-    );
-  }
-
-  private onCLick(event) {
-    const {onClick} = this.props;
-
-    if (onClick) {
-      onClick(event);
+    public constructor(props: IProps) {
+        super(props);
     }
-  }
+
+    public render(): JSX.Element {
+        const { loginText } = this.props;
+        const { regText } = this.props;
+        const auth  = userService.isLogIn();
+
+        return (
+            <div className='header-right'>
+                {auth ?
+                    (<a className={ 'header-right__links' } href={ PATHS.PROFILE }>[ { userService.getUserInfo('login') } ]</a>)
+                    :
+                    (<div>
+                        <a className={ 'header-right__links' } href={PATHS.SIGN_IN}>{ loginText }</a>
+                        <a className={ 'header-right__links' } href={PATHS.SIGN_UP}>{ regText }</a>
+                    </div>)
+                }
+            </div>
+        );
+    }
 }
+
+const mapStateToProps = (state: { lang: ILangReducer; }) => {
+    return {
+        loginText: state.lang.langObject['main.signIn'][state.lang.lang],
+        regText: state.lang.langObject['main.signUp'][state.lang.lang],
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(HeaderRight);

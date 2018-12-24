@@ -1,0 +1,23 @@
+@import '../../statics/scss/reset.scss';
+
+.game-stat {
+  opacity: 0.4;
+  margin-top: 5px;
+  grid-column: 3/4;
+  grid-row: 1/4;
+  display: grid;
+}
+
+.game-stat__timer-block {
+  font-family: 'Palatino', cursive;
+  font-size: 3vw;
+  text-align: center;
+  color: white;
+}
+
+.game-stat__score-block {
+  font-family: 'Palatino', cursive;
+  font-size: 4vw;
+  text-align: center;
+  color: white;
+}

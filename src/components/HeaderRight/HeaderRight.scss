@@ -7,8 +7,9 @@
 
 .header-right__links {
   cursor: pointer;
-  padding-left: 1vmin;
-  padding-right: 1vmin;
+  padding-left: 3vmin;
+  padding-right: 3vmin;
+  font-size: 3vh;
   color: $yellow-color;
   animation: neon-text-dark 13s steps(1, start) infinite reverse;
 }
@@ -16,16 +17,12 @@
 @media screen and (max-width: 500px) {
   .header-right__links{
     //float: none;
-    //display: block;
-    //text-align: left;
-    display: inline-block;
+    display: block;
+    //display: inline-block;
     text-align: center;
+    padding: 2vmin;
   }
   .header-right {
     float: none;
-  }
-
-  .showSmth {
-    dis
   }
 }

@@ -3,63 +3,63 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 import Button from '../../components/Button/Button';
-import { ICommonReducer } from '../../redux/common/common.reducer';
 import Label from '../../components/Label/Label';
+import { ILangReducer } from '../../redux/lang/lang.reducer';
+import { PATHS } from '../../routes';
+import { Link } from 'react-router-dom';
+import Footer from '../../components/Footer/Footer';
+import Header from '../../components/Header/Header';
+
+import './About.scss';
 
 /* tslint:disable:variable-name */
 const MainWrapper = styled.div`
   // some styles
 `;
+
 /* tslint:enable:variable-name */
 
 interface IProps {
-  text?: string;
+    text?: string;
+    backText?: string;
 }
 
-interface IState {
+class About extends React.Component<IProps> {
+    public constructor(props) {
+        super(props);
+    }
 
+    public render(): JSX.Element {
+        const {text} = this.props;
+        const {backText} = this.props;
+
+        return (
+            <MainWrapper>
+                <Header auth={false} logo={'Tron 2D'}/>
+                <div className='main-content'>
+                    <Label
+                        className={'about-block__rules-text'}
+                        text={text}
+                    />
+                    <Button
+                        link={<Link to={PATHS.MENU} className={'button'}>{backText}</Link>}
+                    />
+                </div>
+                <Footer/>
+            </MainWrapper>
+        );
+    }
 }
 
-class About extends React.Component<IProps, IState> {
-  public constructor(props) {
-    super(props);
-
-    // this.customOnClick = this.customOnClick.bind(this);
-  }
-
-  public render(): JSX.Element {
-    return (
-        <MainWrapper>
-          <Label className={ 'error-label' } text={ 'In our game you will play for a motorcyclist, ' +
-          'which leaves a bright trace. Other players or bots will also draw ' +
-          'a line for themselves, and your task is to avoid contact with this line, ' +
-          'regardless of whether it\'s yours or not. Also, in order to win, you must draw a ' +
-          'line so that opponents can not avoid your trace. On the playing field will be spawned ' +
-          'various bonuses that will help you win. So do not yawn!' }/>
-          <Button className={ 'button' } text={ 'Back' } />
-        </MainWrapper>
-    );
-  }
-
-  // private customOnClick(event) {
-  //   const {text, setUserName} = this.props;
-  //   setUserName(text);
-  // }
-}
-
-const mapStateToProps = (state: { common: ICommonReducer; }) => {
-  return {
-    // username: state.common.userData.name,
-    // text: state.common.inputData.value,
-  };
+const mapStateToProps = (state: { lang: ILangReducer }) => {
+    return {
+        backText: state.lang.langObject['buttonBack'][state.lang.lang],
+        text: state.lang.langObject['rules.text'][state.lang.lang],
+    };
 };
 
 const mapDispatchToProps = dispatch => {
-  return {
-    // setUserName(value: string) {
-    //   dispatch(setUserName(value));
-    // },
-  };
+    return {};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(About);

@@ -1,31 +1,31 @@
 import * as React from 'react';
 import b from '../../middleware/b';
 import styled from 'styled-components';
-import './Label.scss';
+import './Lable.scss';
 
 interface IProps {
-  text?: string;
-  className?: string;
+    text: string;
+    className?: string;
 }
 
 interface IState {
 }
 
 export default class Label extends React.Component<IProps, IState> {
-  public static defaultProps: Partial<IProps> = {
-    text: 'Error',
-  };
+    public static defaultProps: Partial<IProps> = {
+        text: 'Error',
+    };
 
-  public constructor(props: IProps) {
-    super(props);
-  }
+    public constructor(props: IProps) {
+        super(props);
+    }
 
-  public render(): JSX.Element {
-    const { text } = this.props;
-    const { className } = this.props;
+    public render(): JSX.Element {
+        const {text} = this.props;
+        const {className} = this.props;
 
-    return (
-        <p className={ className }>{ text }</p>
-    );
-  }
+        return (
+            <p className={className ? className : 'error-label'}>{text}</p>
+        );
+    }
 }

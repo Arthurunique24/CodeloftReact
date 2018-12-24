@@ -1,59 +1,55 @@
-import * as fetch from 'isomorphic-fetch';
+const urlBack = '/api';
 
-class Transport {
-  private static instance: Transport;
-  private headers: Headers;
-  private baseUrl: string;
-
-  constructor() {
-    if (Transport.instance) {
-      return Transport.instance;
+/**
+ * Module with methods for HTTP-requests
+ * @module Transport
+ */
+export default class Transport {
+    /**
+     ** Perform Get requests with specified address
+     * @param {string} adr - address of request
+     * @return {Promise}
+     */
+    public static Get(adr) {
+        return Transport.FSend(urlBack + adr, 'GET');
     }
 
-    this.baseUrl = '';
+    /**
+     * Perform Post requests with specified address
+     * @param {string} adr - address of request
+     * @param {*} body - body of request
+     * @return {Promise}
+     */
+    public static Post(adr, body) {
+        return Transport.FSend(urlBack + adr, 'POST', body);
+    }
 
-    Transport.instance = this;
+    public static Put(adr, body) {
+        return Transport.FSend(urlBack + adr, 'PUT', body);
+    }
 
-    this.setUpHeaders();
-  }
+    public static Delete(adr, body) {
+        return Transport.FSend(urlBack + adr, 'DELETE', body);
+    }
 
-  public get(uri: string, timeout: number = 20000) {
-    return this._sender(uri, 'GET', timeout);
-  }
-
-  public post(uri: string, data?: object, timeout: number = 20000) {
-    return this._sender(uri, 'POST', timeout, JSON.stringify(data));
-  }
-
-  private async _sender(uri: string, type: string, timeout: number, data?: string): Promise<Response> {
-    const options = {
-      method: type,
-      mode: 'no-cors',
-      body: data,
-      timeout,
-    };
-
-    return fetch(this.baseUrl + uri, this.setRequest(options));
-  }
-
-  private setRequest(options?) {
-    const params: RequestInit = {
-      method: options.method,
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8',
-      },
-      body: options.body,
-      credentials: 'same-origin',
-    };
-    return params;
-  }
-
-  private setUpHeaders() {
-    this.headers = new Headers();
-    this.headers.append('Content-Type', 'application/json');
-  }
+    /**
+     * Perform requests with specified address
+     * @param {string} adr - address of request
+     * @param {string} methodName - method of request
+     * @param {*} [body={}] - body of request
+     * @return {Promise}
+     */
+    private static FSend(adr: string, methodName: string, body = {}) {
+        const url = adr;
+        const fPar: RequestInit = {
+            method: methodName,
+            headers: {},
+            credentials: 'include',
+        };
+        if (methodName === 'POST') {
+            fPar.body = JSON.stringify(body);
+            fPar.headers['Content-Type'] = 'application/json; charset=utf-8';
+        }
+        return fetch(url, fPar);
+    }
 }
-
-const transport = new Transport();
-
-export default transport;
