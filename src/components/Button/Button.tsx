@@ -30,7 +30,6 @@ export default class Button extends React.Component<IProps> {
 
     private onCLick(event) {
         const {onClick} = this.props;
-
         if (onClick) {
             onClick(event);
         }
